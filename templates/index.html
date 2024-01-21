@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farbmeister App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Farbmeister</h1>
+
+    <form action="/add_item" method="post">
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Pass</th>
+                    <th>Magnet</th>
+                    <th>ELCO Nummer</th>
+                    {% for category in inventar_data[0].__dict__.keys() %}
+                        <th>{{ category }}</th>
+                    {% endfor %}
+
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for item in inventar_data %}
+                
+                    <tr>
+                        <td>
+                            {% if item.ELCO_Nummer and item.ELCO_Nummer != 'x' %}
+                                <form action="{{ url_for('delete_item', elco_nummer=item.ELCO_Nummer) }}" method="post">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ url_for('pass_page') }}" method="post">
+                                <input type="hidden" name="elco_nummer" value="{{ item.ELCO_Nummer }}">
+                                <button class="pass" type="submit">Pass</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('magnet_page') }}" method="post">
+                                <input type="hidden" name="elco_nummer" value="{{ item.ELCO_Nummer }}">
+                                <button class="magnet" type="submit">Magnet</button>
+                            </form>
+                        </td>
+                        <td>{{ item.ELCO_Nummer }}</td>
+                        {% for value in item.__dict__.values() %}
+                            <td>{{ value if value != None else "" }}</td>
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td><input type="text" id="elco_nummer" name="elco_nummer" required></td>
+                    <td><input type="text" id="maschine" name="maschine" ></td>
+                    <td><input type="text" id="mass" name="mass" ></td>
+                    <td><input type="text" id="produktion_nummer" name="produktion_nummer" ></td>
+                    <td><input type="text" id="l_cm" name="l_cm" ></td>
+                    <td><input type="text" id="my" name="my" ></td>
+                    <td><input type="text" id="cm3" name="cm3"></td>
+                    <td><button type="submit">Add Item</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+</body>
+</html>
