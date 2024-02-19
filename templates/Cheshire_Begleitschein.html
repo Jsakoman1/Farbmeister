@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Cheshire Begleitschein</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_print.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</head>
+
+<body>
+
+    <div id="not-printable">
+        {% include 'navbar.html' %}
+        {% include 'side_bar.html' %}
+    </div>
+
+    <div class="content">
+        
+        <div class="container">
+
+            <div id="not-printable">
+                <button id="print_button" onclick="printPage()">Print</button>
+            </div>
+
+            <div id="printable">
+                <table border="1">
+                    <tbody>
+
+                        <tr>
+                            <td id="first-row" colspan="13">Begleitschein / Bestellung</td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="second-row"colspan="13">Cheshire Fifth Avenue, Tameside Park Industrial Estate, Dukinfield, Cheshire UK SK16 4PP</td>
+                        </tr>
+
+                        <tr id="third-row">
+                            <td id="cell_wide_blue">Maschine</td>
+                            <td id="cell_wide_blue">Mass</td>
+                            <td id="cell_wide_blue">Walzen-Nr.</td>
+                            <td id="cell_wide_blue">Prod. Nummer</td>
+                            <td id="cell_narrow">L/cm</td>
+                            <td id="cell_narrow">my</td>
+                            <td id="cell_narrow">cm3</td>
+                            <td id="cell_wide_brown">seitl. Rand</td>
+                            <td id="cell_narrow_brown">Qual.</td>
+                            <td id="cell_narrow_brown">Schutz ring</td>
+                            <td id="cell_wide_brown">Text</td>
+                            <td id="cell_extra_wide_brown">Bemerkung</td>
+                            <td id="cell_wide_brown">Datum</td>
+                        </tr>
+
+
+                        {% for item in cheshire_data %}
+                        <tr>
+                            <td>{{ item.Maschine }}</td>
+                            <td>{{ item.Mass }}</td>
+                            <td>{{ item.ELCO_Nummer }}</td>
+                            <td>{{ item.Produktion_Nummer }}</td>
+                            <td>{{ item.L_cm }}</td>
+                            <td>{{ item.my }}</td>
+                            <td>{{ item.cm3 }}</td>
+                            <td>{{ item.seitl_rand }}</td>
+                            <td>{{ item.qual }}</td>
+                            <td>{{ item.schutzring }}</td>
+                            <td>{{ item.text }}</td>
+                            <td>{{ item.bemerkung }}</td>
+                            <td>{{ item.datum }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td id="note-row" colspan="13">Alle Nummern bleiben auf der Walze!!! Rasterung entsprechend der Walzennummer und dem dazugehörigen Auftrag!!! All numbers will remain on the roller. Screening according to the reel number and the corresponding order!!!</td>
+                        </tr>
+
+                        <tr>
+                            <td id="footer-row" colspan="13">Sender: ELCO AG,  CH-5201 Brugg,  Wildischachen, Jean-Michel Henna, Tel.: +41 56 462 81 48</td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

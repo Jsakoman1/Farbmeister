@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Zecher Print</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_print.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</head>
+
+<body>
+    <div id="not-printable">
+        {% include 'navbar.html' %}
+        {% include 'side_bar.html' %}
+        
+    </div>
+    <div class="content">
+    <div class="container">
+        <div id="not-printable">
+            <button id="print_button" onclick="printPage()">Print</button>
+        </div>
+    <div id="printable1">
+
+        <div id="auftrag-section">
+        <table border="1">
+            <tbody>
+                <!-- Row 1 -->
+                <tr>
+                    <td id="first-row" colspan="9">Elco Ag Wildischachen, CH5201 Brugg</td>
+                    <td id="first-row" colspan="4">B e s t e l l u n g </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                    <td id="second-row"colspan="13">Kurt ZECHER GmbH Görlitzer Strasse 2  D-33098 Paderborn</td>
+                </tr>
+                <!-- Row 3 -->
+                <tr id="third-row">
+                    <td id="cell_wide_blue">Maschine</td>
+                    <td id="cell_wide_blue">Mass</td>
+                    <td id="cell_wide_blue">Walzen-Nr.</td>
+                    <td id="cell_wide_blue">Prod. Nummer</td>
+                    <td id="cell_narrow">L/cm</td>
+                    <td id="cell_narrow">my</td>
+                    <td id="cell_narrow">cm3</td>
+                    <td id="cell_wide_brown">seitl. Rand</td>
+                    <td id="cell_narrow_brown">Qual.</td>
+                    <td id="cell_narrow_brown">Schutz ring</td>
+                    <td id="cell_wide_brown">Text</td>
+                    <td id="cell_extra_wide_brown">Bemerkung</td>
+                    <td id="cell_wide_brown">Datum</td>
+                </tr>
+
+
+                {% for item in zecher_data %}
+                <tr>
+                    <td>{{ item.Maschine }}</td>
+                    <td>{{ item.Mass }}</td>
+                    <td>{{ item.ELCO_Nummer }}</td>
+                    <td>{{ item.Produktion_Nummer }}</td>
+                    <td>{{ item.L_cm }}</td>
+                    <td>{{ item.my }}</td>
+                    <td>{{ item.cm3 }}</td>
+                    <td>{{ item.seitl_rand }}</td>
+                    <td>{{ item.qual }}</td>
+                    <td>{{ item.schutzring }}</td>
+                    <td>{{ item.text }}</td>
+                    <td>{{ item.bemerkung }}</td>
+                    <td>{{ item.datum }}</td>
+                </tr>
+                {% endfor %}
+
+
+
+                <!-- Rows 5 and 6 invisible-->
+
+
+                <tr>
+                    <td class="empty-cell"></td>
+                </tr>
+                <tr>
+                    <td class="empty-cell"></td>
+                </tr>
+
+                <!-- Row 7-->
+                <tr>
+                    <td colspan="3">Verpackung:</td>
+                    <td colspan="4">1 Holzkiste</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Masse</td>
+                    <td>Lange (cm)</td>
+                    <td>Breite (cm)</td>
+                    <td colspan="2">Höhe (cm)</td>
+                    <td class="empty-cell"></td>
+                    <td>m3</td>
+                    <td class="empty-cell"></td>
+                    <td>Gewicht (kg)</td>
+                    
+                </tr>
+
+                <tr>
+                    <td class="empty-cell" colspan="3"></td>
+                    <td>77</td>
+                    <td>25</td>
+                    <td colspan="2">34</td>
+                    <td class="empty-cell"></td>
+                    <td>0.06545</td>
+                    <td class="empty-cell"></td>
+                    <td>21,00</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="7">ABS: Jean-Michel Henna  Tel. : +41 56 462 81 48  7:00 - 15:00</td>
+                </tr>
+
+
+
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div id="printable2">
+
+        <div id="begleitschein-section">
+
+        <table border="1">
+            <tbody>
+                <!-- Row 1 -->
+                <tr>
+                    <td id="first-row" colspan="13">Begleitschein / Bestellung</td>
+
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                    <td id="second-row"colspan="13">Kurt ZECHER GmbH Görlitzer Strasse 2  D-33098 Paderborn</td>
+                </tr>
+                <!-- Row 3 -->
+                <tr id="third-row">
+                    <td id="cell_wide_blue">Maschine</td>
+                    <td id="cell_wide_blue">Mass</td>
+                    <td id="cell_wide_blue">Walzen-Nr.</td>
+                    <td id="cell_wide_blue">Prod. Nummer</td>
+                    <td id="cell_narrow">L/cm</td>
+                    <td id="cell_narrow">my</td>
+                    <td id="cell_narrow">cm3</td>
+                    <td id="cell_wide_brown">seitl. Rand</td>
+                    <td id="cell_narrow_brown">Qual.</td>
+                    <td id="cell_narrow_brown">Schutz ring</td>
+                    <td id="cell_wide_brown">Text</td>
+                    <td id="cell_extra_wide_brown">Bemerkung</td>
+                    <td id="cell_wide_brown">Datum</td>
+                </tr>
+
+
+                {% for item in zecher_data %}
+                <tr>
+                    <td>{{ item.Maschine }}</td>
+                    <td>{{ item.Mass }}</td>
+                    <td>{{ item.ELCO_Nummer }}</td>
+                    <td>{{ item.Produktion_Nummer }}</td>
+                    <td>{{ item.L_cm }}</td>
+                    <td>{{ item.my }}</td>
+                    <td>{{ item.cm3 }}</td>
+                    <td>{{ item.seitl_rand }}</td>
+                    <td>{{ item.qual }}</td>
+                    <td>{{ item.schutzring }}</td>
+                    <td>{{ item.text }}</td>
+                    <td>{{ item.bemerkung }}</td>
+                    <td>{{ item.datum }}</td>
+                </tr>
+                {% endfor %}
+
+
+                <!-- Row 4 -->
+                <tr>
+                    <td id="note-row" colspan="13">Achtung! RANDLOS!</td>
+                </tr>
+
+                <!-- Row 5 -->
+                <tr>
+                    <td id="footer-row" colspan="13">Sender: ELCO AG,  CH-5201 Brugg,  Wildischachen, Jean-Michel Henna, Tel.: +41 56 462 81 48</td>
+                </tr>
+            
+                </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+    
+
+</body>
+
+</html>

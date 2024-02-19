@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farbmeister App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% include 'side_bar.html' %}
+
+    <div class="content">
+
+  <!-- Add label text for the dropdown -->
+  <label for="filterDropdown" class="dropdown-label">Filter by Machine:</label>
+
+  <!-- Add a larger and styled dropdown -->
+  <select id="filterDropdown" onchange="filterTable()">
+      <option value="all">All</option>
+      <!-- Add options for unique values of Maschine attribute -->
+      {% set maschinen = [] %}
+      {% for item in inventar_data %}
+          {% for maschine in item.Maschine.split('/') %}
+              {% if maschine.strip() not in maschinen %}
+                  {% set _ = maschinen.append(maschine.strip()) %}
+                  <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
+              {% endif %}
+          {% endfor %}
+      {% endfor %}
+  </select>
+
+
+
+    
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>DELETE</th>
+                    <th>Edit</th>
+                    <th>Pass</th>
+                    <th>Magnet</th>
+                    <th>TLS</th>
+                    <th>APEX</th>
+                    <th>Zecher</th>
+                    <th>Cheshire</th>
+
+                    {% for category in inventar_data[0].__dict__.keys() %}
+                        <th>{{ category }}</th>
+                    {% endfor %}
+
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for item in inventar_data %}
+                
+                    <tr>
+                        <td>
+                            <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item', elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
+                                <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Delete</button>
+                            </form>
+                        </td>
+                        
+                        <td>
+                            <form action="{{ url_for('edit_item', elco_nummer_edit=item.ELCO_Nummer) }}" method="GET">
+                                <button class="edit" type="submit">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('pass_page') }}" method="post">
+                                <input type="hidden" name="elco_nummer_pass" value="{{ item.ELCO_Nummer }}">
+                                <button class="pass" type="submit">Pass</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('magnet_page') }}" method="post">
+                                <input type="hidden" name="elco_nummer_magnet" value="{{ item.ELCO_Nummer }}">
+                                <button class="magnet" type="submit">Magnet</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('to_tls') }}" method="post">
+                                <input type="hidden" name="elco_nummer_tls" value="{{ item.ELCO_Nummer }}">
+                                <button class="to-tls" type="submit">To TLS</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('to_apex') }}" method="post">
+                                <input type="hidden" name="elco_nummer_apex" value="{{ item.ELCO_Nummer }}">
+                                <button class="to-apex" type="submit">To APEX</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('to_zecher') }}" method="post">
+                                <input type="hidden" name="elco_nummer_zecher" value="{{ item.ELCO_Nummer }}">
+                                <button class="to-zecher" type="submit">To Zecher</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('to_cheshire') }}" method="post">
+                                <input type="hidden" name="elco_nummer_cheshire" value="{{ item.ELCO_Nummer }}">
+                                <button class="to-cheshire" type="submit">To Cheshire</button>
+                            </form>
+                        </td>
+                    
+
+                        {% for value in item.__dict__.values() %}
+                            <td>{{ value if value != None else "" }}</td>
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+
+         <!-- Add New Item button -->
+<a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Create New Rasterwalze</a>
+
+        
+    </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Get the current path
+    var currentPath = window.location.pathname;
+
+    // Get all navbar buttons
+    var navButtons = document.querySelectorAll('.nav-buttons-side a');
+
+    // Loop through each navbar button
+    navButtons.forEach(function(button) {
+        // Get the href attribute of the button
+        var buttonUrl = button.getAttribute('href');
+
+        // Check if the current path matches the button's URL
+        if (currentPath === buttonUrl) {
+            // Add the 'active' class to the parent button
+            button.querySelector('button').classList.add('active');
+        }
+    });
+});
+</script>
+    
+<script>
+    function filterTable() {
+        var filterValue = document.getElementById("filterDropdown").value;
+        var rows = document.getElementById("inventoryTable").getElementsByTagName("tr");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var maschineCell = rows[i].getElementsByTagName("td")[9]; 
+            
+            if (maschineCell) {
+                var maschinen = maschineCell.textContent.trim().split('/');
+                if (filterValue === "all" || maschinen.includes(filterValue)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

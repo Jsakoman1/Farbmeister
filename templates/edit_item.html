@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+    {% include 'side_bar.html' %}
+
+    <div class="content">
+    <h1>Edit Item</h1>
+
+    <form id="editForm" action="{{ url_for('edit_item', elco_nummer_edit=item['ELCO_Nummer']) }}" method="POST">
+
+        <label for="elco_nummer">ELCO Nummer:</label>
+        <input type="text" id="elco_nummer" name="elco_nummer" requiered value="{{ item['ELCO_Nummer'] }}" placeholder="ELCO Nummer"><br>
+        
+            <label for="maschine">Maschine:</label>
+            <input type="text" id="maschine" name="maschine" value="{{ item['Maschine'] }}" placeholder="Maschine"><br>
+        
+            <label for="mass">Mass:</label>
+            <input type="text" id="mass" name="mass" value="{{ item['Mass'] }}" placeholder="Mass"><br>
+        
+            <label for="produktion_nummer">Produktion Nummer:</label>
+            <input type="text" id="produktion_nummer" name="produktion_nummer" value="{{ item['Produktion_Nummer'] }}" placeholder="Produktion Nummer"><br>
+        
+            <label for="l_cm">L cm:</label>
+            <input type="text" id="l_cm" name="l_cm" value="{{ item['L_cm'] }}" placeholder="L cm"><br>
+        
+            <label for="my">My:</label>
+            <input type="text" id="my" name="my" value="{{ item['my'] }}" placeholder="My"><br>
+        
+            <label for="cm3">Cm3:</label>
+            <input type="text" id="cm3" name="cm3" value="{{ item['cm3'] }}" placeholder="Cm3"><br>
+        
+            <label for="wo">Wo:</label>
+            <input type="text" id="wo" name="wo" value="{{ item['wo'] }}" placeholder="Wo"><br>
+        
+            <label for="erneuert">Erneuert:</label>
+            <input type="text" id="erneuert" name="erneuert" value="{{ item['erneuert'] }}" placeholder="Erneuert"><br>
+        
+            <label for="int_ausgang">Int Ausgang:</label>
+            <input type="text" id="int_ausgang" name="int_ausgang" value="{{ item['int_ausgang'] }}" placeholder="Int Ausgang"><br>
+        
+            <label for="int_eingang">Int Eingang:</label>
+            <input type="text" id="int_eingang" name="int_eingang" value="{{ item['int_eingang'] }}" placeholder="Int Eingang"><br>
+        
+            <label for="bemerkung">Bemerkung:</label>
+            <input type="text" id="bemerkung" name="bemerkung" value="{{ item['bemerkung'] }}" placeholder="Bemerkung"><br>
+        
+            <label for="prod_nr_2">Prod Nr 2:</label>
+            <input type="text" id="prod_nr_2" name="prod_nr_2" value="{{ item['prod_nr_2'] }}" placeholder="Prod Nr 2"><br>
+        
+            <label for="alte_nummer">Alte Nummer:</label>
+            <input type="text" id="alte_nummer" name="alte_nummer" value="{{ item['alte_nummer'] }}" placeholder="Alte Nummer"><br>
+        
+            <label for="Cheshire">Cheshire:</label>
+            <input type="text" id="Cheshire" name="Cheshire" value="{{ item['Cheshire'] }}" placeholder="Cheshire"><br>
+        
+            <label for="Apex">Apex:</label>
+            <input type="text" id="Apex" name="Apex" value="{{ item['Apex'] }}" placeholder="Apex"><br>
+        
+            <label for="Praxair">Praxair:</label>
+            <input type="text" id="Praxair" name="Praxair" value="{{ item['Praxair'] }}" placeholder="Praxair"><br>
+        
+            <label for="Ersetzt">Ersetzt:</label>
+            <input type="text" id="Ersetzt" name="Ersetzt" value="{{ item['Ersetzt'] }}" placeholder="Ersetzt"><br>
+
+        
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+    <script>
+        document.getElementById('editForm').onsubmit = function() {
+            var elcoNummerValue = document.getElementById('elco_nummer').value;
+            if (elcoNummerValue.trim() === '') {
+                alert('ELCO Nummer cannot be empty!');
+                return false;
+            }
+        };
+    </script>
+</body>
+</html>

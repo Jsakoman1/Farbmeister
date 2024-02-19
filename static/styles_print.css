@@ -1,0 +1,174 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: left; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+}
+
+tbody tr:nth-child(even) {
+    background-color: snow; /* Set your desired gray color */
+}
+
+table {
+    width: 800px;
+    font-weight: bold;
+    font-size: 8px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse; /* Collapse borders between cells */
+    border: none; /* Remove border on the table */
+}
+
+td {
+    height: 20px;
+    padding: 0; /* Remove padding */
+}
+
+#first-row {
+    background-color: rgb(255, 218, 10);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bolder;
+    color: red;
+    height: 30px;
+}
+
+#second-row {
+    height: 70px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bolder;
+    color: red;
+    white-space: normal; /* Allow text to wrap onto a new line */
+    max-width: 700px; /* Sets the maximum width for the text */
+}
+
+#third-row {
+    height: 35px;
+    font-size: 12px;
+    max-width: 200px;
+}
+
+#note-row {
+    height: 70px; /* Allow the note row to expand vertically based on content */
+    text-align: center;
+    font-weight: bolder;
+    color: red;
+    white-space: normal; /* Allow text to wrap onto a new line */
+    max-width: 700px; /* Sets the maximum width for the text */
+}
+
+
+
+
+#footer-row {
+    height: 35px;
+    font-size: 16px;
+    font-weight: bolder;
+    white-space: normal; /* Allow text to wrap onto a new line */
+    max-width: 700px; /* Sets the maximum width for the text */
+    
+}
+
+/* Set column widths */
+#cell_wide_blue {
+    min-width: 50px;
+    background-color: skyblue;
+}
+
+#cell_wide_brown {
+    min-width: 50px;
+    background-color: rgb(236, 163, 112);
+}
+
+#cell_extra_wide_brown {
+    min-width: 70px;
+    background-color: rgb(236, 163, 112);
+}
+
+#cell_narrow_brown {
+    min-width: 25px;
+    background-color: rgb(236, 163, 112);
+}
+
+
+#cell_narrow {
+    min-width: 25px;
+    background-color: gold;
+}
+
+
+td.empty-cell {
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+#print_button {
+    margin-top: 0px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    padding: 15px 30px; /* Increase padding for a larger button */
+    width: 250px;
+    font-weight: bold; /* Use 'bold' instead of 'bolder' for stronger emphasis */
+    font-size: large;
+    background-color: #007bff; /* Vibrant blue color */
+    border: none; /* Remove the border for a cleaner look */
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 30px; /* Increase border radius for a rounder button */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Add transition for background-color and transform */
+}
+
+#print_button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Increase scale on hover for a slight zoom effect */
+}
+
+
+
+
+
+
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #printable, #printable * {
+        visibility: visible;
+    }
+
+    #printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    #not-printable {
+        display: none;
+    }
+
+
+
+    
+    
+    table {
+        width: 800px;
+        font-weight: bold;
+        font-size: 8px;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse; /* Collapse borders between cells */
+        border: none; /* Remove border on the table */
+        margin-right: 10px;
+    }
+    
+
+}
