@@ -12,25 +12,31 @@
     {% include 'navbar.html' %}
     {% include 'side_bar.html' %}
 
+    <div class="filter-wrapper">
+        <!-- Add label text for the dropdown -->
+        <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
+
+        <!-- Add a larger and styled dropdown -->
+        <select id="filterDropdown" onchange="filterTable()">
+            <option value="all">Alle</option>
+            <!-- Add options for unique values of Maschine attribute -->
+            {% set maschinen = [] %}
+            {% for item in inventar_data %}
+                {% for maschine in item.Maschine.split('/') %}
+                    {% if maschine.strip() not in maschinen %}
+                        {% set _ = maschinen.append(maschine.strip()) %}
+                        <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </select>
+     </div>
+    
+    
     <div class="content">
 
-  <!-- Add label text for the dropdown -->
-  <label for="filterDropdown" class="dropdown-label">Filter by Machine:</label>
 
-  <!-- Add a larger and styled dropdown -->
-  <select id="filterDropdown" onchange="filterTable()">
-      <option value="all">All</option>
-      <!-- Add options for unique values of Maschine attribute -->
-      {% set maschinen = [] %}
-      {% for item in inventar_data %}
-          {% for maschine in item.Maschine.split('/') %}
-              {% if maschine.strip() not in maschinen %}
-                  {% set _ = maschinen.append(maschine.strip()) %}
-                  <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
-              {% endif %}
-          {% endfor %}
-      {% endfor %}
-  </select>
+
 
 
 
@@ -38,8 +44,8 @@
         <table id="inventoryTable">
             <thead>
                 <tr>
-                    <th>DELETE</th>
-                    <th>Edit</th>
+                    <th>Löschen</th>
+                    <th>Ändern</th>
                     <th>Pass</th>
                     <th>Magnet</th>
                     <th>TLS</th>
@@ -60,13 +66,13 @@
                     <tr>
                         <td>
                             <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item', elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
-                                <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Delete</button>
+                                <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
                             </form>
                         </td>
                         
                         <td>
                             <form action="{{ url_for('edit_item', elco_nummer_edit=item.ELCO_Nummer) }}" method="GET">
-                                <button class="edit" type="submit">Edit</button>
+                                <button class="edit" type="submit">Ändern</button>
                             </form>
                         </td>
                         <td>
@@ -119,7 +125,7 @@
         </table>
 
          <!-- Add New Item button -->
-<a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Create New Rasterwalze</a>
+<a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
 
         
     </div>

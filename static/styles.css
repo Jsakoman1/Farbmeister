@@ -8,13 +8,15 @@ body {
 }
 
 .content {
+
     margin-top: 170px; /* Adjust based on the height of your navbar */
     margin-left: 300px;
     margin-right: 50px; /* Add padding to the left to accommodate the sidebar */
     padding: 20px;
 
+
     overflow-y: auto;
-    height: calc(100vh - 160px); /* Adjust based on the height of your navbar */
+    height: calc(90vh - 160px); /* Adjust based on the height of your navbar */
     background-color: snow; /* Snow background color */
     border-radius: 15px; /* Rounded corners for top left */
 
@@ -485,3 +487,14 @@ td[contenteditable="true"] {
     background-color: #45a049; /* Darker green background color on hover */
 }
 
+.filter-wrapper {
+    position: fixed;
+    top: 110px;
+    left: 300px;
+    padding:10px;
+    background-color: #fff;
+    width:max-content;
+    border-radius: 10px;
+
+    z-index: 1000; /* Ensure it appears above other content */
+}

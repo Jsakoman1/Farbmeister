@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+
+    <style>
+        /* Basic styling for gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            width: 800px; /* Set maximum width for gallery items */
+            margin: 0 auto; /* Center the gallery items */
+            border: 2px solid black;
+        }
+
+        .gallery-item img {
+            max-width: 100%; /* Ensure images don't exceed the width of their container */
+            height: auto;
+        }
+
+        .gallery-item p {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 30px;
+            color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+    {% include 'side_bar.html' %}
+
+    <div class="content">
+        <div class="gallery">
+            <!-- Gallery items -->
+            <div class="gallery-item">
+                <p>202 A03</p>
+                <img src="/static/img/picture1.png" alt="Picture 1">
+            </div>
+            <div class="gallery-item">
+                <p>202 99</p>
+                <img src="/static/img/picture2.png" alt="Picture 2">
+            </div>
+            <div class="gallery-item">
+                <p>381</p>
+                <img src="/static/img/picture3.png" alt="Picture 3">
+            </div>
+            <div class="gallery-item">
+                <p>241 GSV</p>
+                <img src="/static/img/picture4.png" alt="Picture 4">
+            </div>
+            <div class="gallery-item">
+                <p>627.98 GS</p>
+                <img src="/static/img/picture5.png" alt="Picture 5">
+            </div>
+            <div class="gallery-item">
+                <p>440 ?</p>
+                <img src="/static/img/picture6.png" alt="Picture 6">
+            </div>
+            <div class="gallery-item">
+                <p>Richtlinien</p>
+                <img src="/static/img/picture7.png" alt="Picture 7">
+            </div>
+            <div class="gallery-item">
+                <p>Volumentabelle</p>
+                <img src="/static/img/picture8.png" alt="Picture 8">
+            </div>
+            <div class="gallery-item">
+                <p>Masch. Nr. </p>
+                <img src="/static/img/picture9.png" alt="Picture 9">
+            </div>
+        </div>
+        
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Get the current path
+    var currentPath = window.location.pathname;
+
+    // Get all navbar buttons
+    var navButtons = document.querySelectorAll('.nav-buttons-side a');
+
+    // Loop through each navbar button
+    navButtons.forEach(function(button) {
+        // Get the href attribute of the button
+        var buttonUrl = button.getAttribute('href');
+
+        // Check if the current path matches the button's URL
+        if (currentPath === buttonUrl) {
+            // Add the 'active' class to the parent button
+            button.querySelector('button').classList.add('active');
+        }
+    });
+});
+</script>
+</body>
+</html>

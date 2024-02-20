@@ -1,7 +1,8 @@
 import json
 import os
-from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+import secrets
+from datetime import datetime, timedelta
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 
 
 class Rasterwalze:
@@ -30,7 +31,14 @@ class FarbmeisterApp:
     def __init__(self, inventar_file='inventar.json'):
         self.inventar_file = inventar_file
         self.load_and_sort_inventar()
+        self.check_json_files()  # Check and create JSON files if they don't exist
 
+    def check_json_files(self):
+        json_files = ['APEX.json', 'TLS.json', 'Cheshire.json', 'Zecher.json', 'inventar.json']
+        for file_name in json_files:
+            if not os.path.exists(file_name):
+                with open(file_name, 'w') as f:
+                    json.dump([], f)
 
     def extract_numeric_parts(self, elco_nummer_part):
         try:
@@ -81,14 +89,48 @@ class FarbmeisterApp:
 
 
 app = Flask(__name__)
+app.secret_key = "11010101011100100100110011001100110100101011110011001001001100110110101010101110010010011001100110011010010101111001100100100110011001101"
+app.permanent_session_lifetime = timedelta(minutes=700)
+USERNAME = 'Farbmeister'
+PASSWORD = 'ElcoAG'
+
+
 farbmeister_app = FarbmeisterApp()
 farbmeister = FarbmeisterApp()
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == USERNAME and password == PASSWORD:
+            session['logged_in'] = True
+            # Make session permanent
+            session.permanent = True
+            return redirect(url_for('index'))
+        else:
+            return 'Invalid username or password'
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
 
 @app.route('/')
 def index():
     farbmeister.load_and_sort_inventar()
-    return render_template('index.html', inventar_data=farbmeister.inventar_data)
+    if 'logged_in' in session:
+        return render_template('index.html', inventar_data=farbmeister.inventar_data)
+    else:
+        return redirect(url_for('login'))
 
+@app.route('/memo')
+def memo():
+    if 'logged_in' in session:
+        return render_template('memo.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/add_item_page')
 def add_item_page():
@@ -239,8 +281,12 @@ def save_json_data(data, file_path):
 
 @app.route('/tls_page')
 def tls_page():
-    tls_data = load_json_data('TLS.json')
-    return render_template('TLS.html', tls_data=tls_data)
+    if 'logged_in' in session:
+        
+        tls_data = load_json_data('TLS.json')
+        return render_template('TLS.html', tls_data=tls_data)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/tls_auftrag')
 def tls_auftrag():
@@ -366,8 +412,11 @@ def update_cell_apex():
 
 @app.route('/apex_page')
 def apex_page():
-    apex_data = load_json_data('APEX.json')
-    return render_template('APEX.html', apex_data=apex_data)
+    if 'logged_in' in session:
+        apex_data = load_json_data('APEX.json')
+        return render_template('APEX.html', apex_data=apex_data)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/apex_auftrag')
 def apex_auftrag():
@@ -384,8 +433,11 @@ def apex_begleitschein():
 
 @app.route('/cheshire_page')
 def cheshire_page():
-    cheshire_data = load_json_data('Cheshire.json')
-    return render_template('Cheshire.html', cheshire_data=cheshire_data)
+    if 'logged_in' in session:
+        cheshire_data = load_json_data('Cheshire.json')
+        return render_template('Cheshire.html', cheshire_data=cheshire_data)
+    else:
+        return redirect(url_for('login'))
 
 
 
@@ -456,8 +508,11 @@ def update_cell_cheshire():
 
 @app.route('/zecher_page')
 def zecher_page():
-    zecher_data = load_json_data('Zecher.json')
-    return render_template('Zecher.html', zecher_data=zecher_data)
+    if 'logged_in' in session:
+        zecher_data = load_json_data('Zecher.json')
+        return render_template('Zecher.html', zecher_data=zecher_data)
+    else:
+        return redirect(url_for('login'))
 
 
 
@@ -530,4 +585,4 @@ def update_cell_zecher():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(host="0.0.0.0")

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_print.css') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_pass_magnet.css') }}">
     <title>Pass Page</title>
     <style>
@@ -211,10 +211,13 @@
     <div id="not-printable">
         {% include 'navbar.html' %}
         {% include 'side_bar.html' %}
+
+
+
     </div>
     <div class="content">
     <div id="printable">
-        <table border="1">
+        <table id="myTable" border="1">
             <tbody>
                 <!-- Row 1 -->
                 <tr id="row1">
@@ -271,6 +274,9 @@
             window.print();
         }
     </script>
+
+
+
 </div>
 </body>
 

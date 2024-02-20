@@ -146,9 +146,13 @@ td.empty-cell {
     }
 
     #printable {
+        margin: 0px;
+        padding:0px;
         position: absolute;
         left: 0;
         top: 0;
+
+
     }
 
     #not-printable {
@@ -168,6 +172,8 @@ td.empty-cell {
         border-collapse: collapse; /* Collapse borders between cells */
         border: none; /* Remove border on the table */
         margin-right: 10px;
+
+
     }
     
 

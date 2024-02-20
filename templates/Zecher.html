@@ -25,7 +25,7 @@
      <table border="1" id="zecherTable">
         <thead>
             <tr>
-                <th>Delete</th>
+                <th>Löschen</th>
                 <th>ELCO_Nummer</th>
                 <th>Maschine</th>
                 <th>Mass</th>
@@ -47,7 +47,7 @@
                 <tr>
                     <td>
                         <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item_Zecher', elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
-                            <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Delete</button>
+                            <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
                         </form>
                     </td>
                     <td>{{ item.ELCO_Nummer }}</td>
