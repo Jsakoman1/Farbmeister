@@ -317,19 +317,37 @@ def delete_item_TLS(elco_nummer_delete):
     save_json_data(tls_data, 'TLS.json')
     return redirect(url_for('tls_page'))
 
-@app.route('/update_cell_tls', methods=['POST'])
-def update_cell_tls():
+@app.route('/save_changes_TLS', methods=['POST'])
+def save_changes_TLS():
     data = request.json
-    elco_num = data['elcoNum']
-    field = data['field']
-    value = data['value']
+
+
     tls_data = load_json_data('TLS.json')
 
-    for item in tls_data:
-        if item['ELCO_Nummer'] == elco_num:
-            item[field] = value
+    # Update the existing data with the changes sent from the client
+    for change in data:
+        elco_num = change['elcoNum']
+        field = change['field']
+        value = change['value']
 
+        # Clean the cell value: remove leading and trailing whitespace
+        value = value.strip()
+
+        # Replace '\n' with empty string if the value consists only of whitespace characters
+        if value == '\n':
+            value = ''
+
+        # Find the item with the corresponding ELCO_Nummer
+        for item in tls_data:
+            if item['ELCO_Nummer'] == elco_num:
+                # Update the specified field
+                item[field] = value
+                break
+
+    # Save the updated data back to the APEX.json file
     save_json_data(tls_data, 'TLS.json')
+
+    # Return the updated data as a response
     return jsonify(tls_data)
 
 
@@ -373,19 +391,37 @@ def delete_item_APEX(elco_nummer_delete):
     save_json_data(apex_data, 'APEX.json')
     return redirect(url_for('apex_page'))
 
-@app.route('/update_cell_apex', methods=['POST'])
-def update_cell_apex():
-    data = request.json
-    elco_num = data['elcoNum']
-    field = data['field']
-    value = data['value']
+@app.route('/save_changes_APEX', methods=['POST'])
+def save_changes_APEX():
+    data = request.json  # Get the JSON data sent from the client
+
+    # Load the existing data from APEX.json
     apex_data = load_json_data('APEX.json')
 
-    for item in apex_data:
-        if item['ELCO_Nummer'] == elco_num:
-            item[field] = value
+    # Update the existing data with the changes sent from the client
+    for change in data:
+        elco_num = change['elcoNum']
+        field = change['field']
+        value = change['value']
 
+        # Clean the cell value: remove leading and trailing whitespace
+        value = value.strip()
+
+        # Replace '\n' with empty string if the value consists only of whitespace characters
+        if value == '\n':
+            value = ''
+
+        # Find the item with the corresponding ELCO_Nummer
+        for item in apex_data:
+            if item['ELCO_Nummer'] == elco_num:
+                # Update the specified field
+                item[field] = value
+                break
+
+    # Save the updated data back to the APEX.json file
     save_json_data(apex_data, 'APEX.json')
+
+    # Return the updated data as a response
     return jsonify(apex_data)
 
 @app.route('/apex_page')
@@ -464,20 +500,39 @@ def delete_item_Cheshire(elco_nummer_delete):
     save_json_data(cheshire_data, 'Cheshire.json')
     return redirect(url_for('cheshire_page'))
 
-@app.route('/update_cell_cheshire', methods=['POST'])
-def update_cell_cheshire():
+@app.route('/save_changes_Cheshire', methods=['POST'])
+def save_changes_Cheshire():
     data = request.json
-    elco_num = data['elcoNum']
-    field = data['field']
-    value = data['value']
+
+
     cheshire_data = load_json_data('Cheshire.json')
 
-    for item in cheshire_data:
-        if item['ELCO_Nummer'] == elco_num:
-            item[field] = value
 
+    for change in data:
+        elco_num = change['elcoNum']
+        field = change['field']
+        value = change['value']
+
+
+        value = value.strip()
+
+        # Replace '\n' with empty string if the value consists only of whitespace characters
+        if value == '\n':
+            value = ''
+
+        # Find the item with the corresponding ELCO_Nummer
+        for item in cheshire_data:
+            if item['ELCO_Nummer'] == elco_num:
+                # Update the specified field
+                item[field] = value
+                break
+
+    # Save the updated data back to the APEX.json file
     save_json_data(cheshire_data, 'Cheshire.json')
+
+    # Return the updated data as a response
     return jsonify(cheshire_data)
+
 
 
 @app.route('/zecher_page')
@@ -537,21 +592,38 @@ def delete_item_Zecher(elco_nummer_delete):
     save_json_data(zecher_data, 'Zecher.json')
     return redirect(url_for('zecher_page'))
 
-@app.route('/update_cell_zecher', methods=['POST'])
-def update_cell_zecher():
-    data = request.json
-    elco_num = data['elcoNum']
-    field = data['field']
-    value = data['value']
+@app.route('/save_changes_Zecher', methods=['POST'])
+def save_changes_Zecher():
+    data = request.json  # Get the JSON data sent from the client
+
+
     zecher_data = load_json_data('Zecher.json')
 
-    for item in zecher_data:
-        if item['ELCO_Nummer'] == elco_num:
-            item[field] = value
+    # Update the existing data with the changes sent from the client
+    for change in data:
+        elco_num = change['elcoNum']
+        field = change['field']
+        value = change['value']
+
+        # Clean the cell value: remove leading and trailing whitespace
+        value = value.strip()
+
+        # Replace '\n' with empty string if the value consists only of whitespace characters
+        if value == '\n':
+            value = ''
+
+        # Find the item with the corresponding ELCO_Nummer
+        for item in zecher_data:
+            if item['ELCO_Nummer'] == elco_num:
+                # Update the specified field
+                item[field] = value
+                break
+
 
     save_json_data(zecher_data, 'Zecher.json')
-    return jsonify(zecher_data)
 
+    # Return the updated data as a response
+    return jsonify(zecher_data)
 
 
 

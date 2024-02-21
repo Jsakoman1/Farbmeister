@@ -45,7 +45,7 @@
                 <!-- Row 5 -->
                 <tr>
                     <td>Bemerkung</td>
-                    <td></td>
+                    <td><textarea id="userInputBemerkung"></textarea></td>
                 </tr>
                 <!-- Row 6 -->
                 <tr>
@@ -59,7 +59,7 @@
                 <!-- Row 8 -->
                 <tr>
                     <td rowspan="2">Wird eingebaut in die Maschine:</td>
-                    <td rowspan="2" colspan="2"></td>
+                    <td rowspan="2" colspan="2"><textarea id="userInputMaschine"></textarea></td>
                 </tr>
 
             </tbody>
@@ -74,7 +74,25 @@
         }
     </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', adjustTextareaFontSize);
+document.getElementById('userInputBemerkung').addEventListener('input', adjustTextareaFontSize);
 
+function adjustTextareaFontSize() {
+    var textarea = document.getElementById('userInputBemerkung');
+    var maxHeight = textarea.scrollHeight;
+    var scrollHeight = textarea.clientHeight;
+
+    // Adjust font size based on the scroll height and max height
+    while (scrollHeight < maxHeight && parseInt(getComputedStyle(textarea).fontSize) > 10) {
+        var fontSize = parseInt(getComputedStyle(textarea).fontSize);
+        fontSize--;
+        textarea.style.fontSize = fontSize + 'px';
+        scrollHeight = textarea.clientHeight;
+    }
+}
+
+</script>
 
 </div>
 </body>

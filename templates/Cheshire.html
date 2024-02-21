@@ -15,9 +15,9 @@
 
         <div class="content">
             <a class="print-button" href="/cheshire_auftrag">PRINT Auftrag</a>
-            <a class="print-button" href="/cheshire_begleitschein">PRINT Begleitschein</a>      
+            <a class="print-button" href="/cheshire_begleitschein">PRINT Begleitschein</a>
 
-
+            <button id="saveChangesButton">Änderungen speichern</button>
 
      <table border="1" id="cheshireTable">
         <thead>
@@ -65,50 +65,42 @@
         </tbody>
     </table>
     </div>
-    
 
-        <script>
-            // Function to handle changes in editable cells
-    function handleCellChange(elcoNum, field, value) {
-        // Create a data object to send to the server
-        const data = {
-            elcoNum: elcoNum,
-            field: field,
-            value: value
-        };
-    
-        // Send an AJAX POST request to save the updated value
-        fetch('/update_cell_cheshire', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Reload cell values from JSON data
-            reloadCellValues(data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
-    
-    // Function to reload cell values from JSON data
-    function reloadCellValues(data) {
-        // Loop through the data and update cell values accordingly
-        for (const item of data) {
-            const elcoNum = item.ELCO_Nummer;
-            document.getElementById(`seitl_rand_${elcoNum}`).innerText = item.seitl_rand;
-            document.getElementById(`qual_${elcoNum}`).innerText = item.qual;
-            document.getElementById(`schutzring_${elcoNum}`).innerText = item.schutzring;
-            document.getElementById(`text_${elcoNum}`).innerText = item.text;
-            document.getElementById(`bemerkung_${elcoNum}`).innerText = item.bemerkung;
-            document.getElementById(`datum_${elcoNum}`).innerText = item.datum;
+
+<script>
+        // Define a variable to store pending changes
+        let pendingChanges = [];
+
+        // Function to handle cell changes and store pending changes
+        function handleCellChange(elcoNum, field, value) {
+            pendingChanges.push({ elcoNum: elcoNum, field: field, value: value });
         }
-    }
-        </script>
+
+        // Function to save pending changes
+        function saveChanges() {
+            // Send an AJAX POST request to save the pending changes
+            fetch('/save_changes_Cheshire', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(pendingChanges),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reload cell values from JSON data
+                reloadCellValues(data);
+                // Clear pendingChanges array after saving
+                pendingChanges = [];
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Add event listener to the "Save Changes" button
+        document.getElementById('saveChangesButton').addEventListener('click', saveChanges);
+    </script>
 
 
 </body>

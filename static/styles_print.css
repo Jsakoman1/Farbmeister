@@ -130,9 +130,32 @@ td.empty-cell {
     transform: scale(1.05); /* Increase scale on hover for a slight zoom effect */
 }
 
+input[type="text"]:focus {
+    outline: none;
+    border-color: #2ecc71; 
+}
+
+input[type="text"]:hover {
+    background-color: #cccccc; 
+}
 
 
+@media (max-width: 900px) {
+    .navbar-title,
+    .navbar-logo {
+        flex: 0 0 auto;
+    }
 
+    .add-new-item-button {
+        margin-top:0px;
+
+        display: inline-block;
+        float:none;
+
+    }
+
+
+}
 
 
 

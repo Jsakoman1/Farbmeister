@@ -48,35 +48,7 @@ document.getElementById("addItemForm").addEventListener("submit", function(event
     xhr.send(JSON.stringify({ elco_nummer: elcoNummer }));
 });
 
-// AJAX request to check if ELCO number exists in APEX data before submitting the form
-document.getElementById("addItemForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
-    
-    var elcoNummer = document.getElementById("elco_nummer_apex").value;
-    
-    // Send AJAX request to check if ELCO number exists in APEX data
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/check_elco_nummer_apex_exists", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.exists) {
-                    // Show warning message to the user
-                    document.getElementById("warningMessage").innerText = "ELCO number already exists in APEX data. Please choose a different ELCO number.";
-                } else {
-                    // If ELCO number does not exist, submit the form
-                    document.getElementById("addItemForm").submit();
-                }
-            } else {
-                // Handle error
-                alert("Error checking ELCO number existence in APEX data. Please try again.");
-            }
-        }
-    };
-    xhr.send(JSON.stringify({ elco_nummer_apex: elcoNummer }));
-});
+
 
 
 window.onload = function() {

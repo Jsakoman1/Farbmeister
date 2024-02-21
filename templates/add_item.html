@@ -10,7 +10,7 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    {% include 'side_bar.html' %}
+
 
     <div class="content">
 
@@ -112,7 +112,35 @@
         </form>
         
     </div>
-
+    <script>
+    // AJAX request to check if ELCO number exists before submitting the form
+document.getElementById("addItemForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    var elcoNummer = document.getElementById("elco_nummer").value;
+    
+    // Send AJAX request to check if ELCO number exists
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/check_elco_nummer_exists", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.exists) {
+                    alert("ELCO number already exists. Please choose a different ELCO number.");
+                } else {
+                    // If ELCO number does not exist, submit the form
+                    document.getElementById("addItemForm").submit();
+                }
+            } else {
+                alert("Error checking ELCO number existence. Please try again.");
+            }
+        }
+    };
+    xhr.send(JSON.stringify({ elco_nummer: elcoNummer }));
+});
+</script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
         // Get the current path
