@@ -14,67 +14,103 @@
 
     <div class="content">
 
-    <!-- Form for adding new item -->
-    <form id="addItemForm" action="/add_item" method="post" class="add-item-form">
-        <h2>Add New Item</h2>
-        <div class="form-group">
-            <label for="elco_nummer">ELCO Nummer:</label>
-            <input type="text" id="elco_nummer" name="elco_nummer" required placeholder="ELCO Nummer">
-    
-            <label for="maschine">Maschine:</label>
-            <input type="text" id="maschine" name="maschine" placeholder="Maschine">
-    
-            <label for="mass">Mass:</label>
-            <input type="text" id="mass" name="mass" placeholder="Mass">
-    
-            <label for="produktion_nummer">Produktion Nummer:</label>
-            <input type="text" id="produktion_nummer" name="produktion_nummer" placeholder="Produktion Nummer">
-    
-            <label for="l_cm">L cm:</label>
-            <input type="text" id="l_cm" name="l_cm" placeholder="L cm">
-    
-            <label for="my">My:</label>
-            <input type="text" id="my" name="my" placeholder="My">
-    
-            <label for="cm3">cm3:</label>
-            <input type="text" id="cm3" name="cm3" placeholder="cm3">
-    
-            <label for="wo">Wo:</label>
-            <input type="text" id="wo" name="wo" placeholder="Wo">
-    
-            <label for="erneuert">Erneuert:</label>
-            <input type="text" id="erneuert" name="erneuert" placeholder="Erneuert">
-    
-            <label for="int_ausgang">Int Ausgang:</label>
-            <input type="text" id="int_ausgang" name="int_ausgang" placeholder="Int Ausgang">
-    
-            <label for="int_eingang">Int Eingang:</label>
-            <input type="text" id="int_eingang" name="int_eingang" placeholder="Int Eingang">
-    
-            <label for="bemerkung">Bemerkung:</label>
-            <input type="text" id="bemerkung" name="bemerkung" placeholder="Bemerkung">
-    
-            <label for="prod_nr_2">Prod Nr 2:</label>
-            <input type="text" id="prod_nr_2" name="prod_nr_2" placeholder="Prod Nr 2">
-    
-            <label for="alte_nummer">Alte Nummer:</label>
-            <input type="text" id="alte_nummer" name="alte_nummer" placeholder="Alte Nummer">
-    
-            <label for="Cheshire">Cheshire:</label>
-            <input type="text" id="Cheshire" name="Cheshire" placeholder="Cheshire">
-    
-            <label for="Apex">Apex:</label>
-            <input type="text" id="Apex" name="Apex" placeholder="Apex">
-    
-            <label for="Praxair">Praxair:</label>
-            <input type="text" id="Praxair" name="Praxair" placeholder="Praxair">
-    
-            <label for="Ersetzt">Ersetzt:</label>
-            <input type="text" id="Ersetzt" name="Ersetzt" placeholder="Ersetzt">
-        </div>
-        <!-- Add more input fields for other item attributes -->
-        <button type="submit" class="add-item-button">Submit</button>
-    </form>
+        <form id="addItemForm" action="/add_item" method="post" class="add-item-form">
+            <h2>Neue Rasterwalze erstellen</h2>
+            <div class="form-group">
+                <div>
+                    <label for="elco_nummer">ELCO Nummer:</label>
+                    <input type="text" id="elco_nummer" name="elco_nummer" required placeholder="ELCO Nummer">
+                </div>
+        
+                <div>
+                    <label for="maschine">Maschine:</label>
+                    <input type="text" id="maschine" name="maschine" placeholder="Maschine">
+                </div>
+        
+                <div>
+                    <label for="mass">Mass:</label>
+                    <input type="text" id="mass" name="mass" placeholder="Mass">
+                </div>
+        
+                <div>
+                    <label for="produktion_nummer">Produktion Nummer:</label>
+                    <input type="text" id="produktion_nummer" name="produktion_nummer" placeholder="Produktion Nummer">
+                </div>
+        
+                <div>
+                    <label for="l_cm">L_cm:</label>
+                    <input type="text" id="l_cm" name="l_cm" placeholder="L cm">
+                </div>
+        
+                <div>
+                    <label for="my">My:</label>
+                    <input type="text" id="my" name="my" placeholder="My">
+                </div>
+        
+                <div>
+                    <label for="cm3">cm3:</label>
+                    <input type="text" id="cm3" name="cm3" placeholder="cm3">
+                </div>
+        
+                <div>
+                    <label for="wo">Wo:</label>
+                    <input type="text" id="wo" name="wo" placeholder="Wo">
+                </div>
+        
+                <div>
+                    <label for="erneuert">Erneuert:</label>
+                    <input type="text" id="erneuert" name="erneuert" placeholder="Erneuert">
+                </div>
+        
+                <div>
+                    <label for="int_ausgang">Int Ausgang:</label>
+                    <input type="text" id="int_ausgang" name="int_ausgang" placeholder="Int Ausgang">
+                </div>
+        
+                <div>
+                    <label for="int_eingang">Int Eingang:</label>
+                    <input type="text" id="int_eingang" name="int_eingang" placeholder="Int Eingang">
+                </div>
+        
+                <div>
+                    <label for="bemerkung">Bemerkung:</label>
+                    <input type="text" id="bemerkung" name="bemerkung" placeholder="Bemerkung">
+                </div>
+        
+                <div>
+                    <label for="prod_nr_2">Prod Nr 2:</label>
+                    <input type="text" id="prod_nr_2" name="prod_nr_2" placeholder="Prod Nr 2">
+                </div>
+        
+                <div>
+                    <label for="alte_nummer">Alte Nummer:</label>
+                    <input type="text" id="alte_nummer" name="alte_nummer" placeholder="Alte Nummer">
+                </div>
+        
+                <div>
+                    <label for="Cheshire">Cheshire:</label>
+                    <input type="text" id="Cheshire" name="Cheshire" placeholder="Cheshire">
+                </div>
+        
+                <div>
+                    <label for="Apex">Apex:</label>
+                    <input type="text" id="Apex" name="Apex" placeholder="Apex">
+                </div>
+        
+                <div>
+                    <label for="Praxair">Praxair:</label>
+                    <input type="text" id="Praxair" name="Praxair" placeholder="Praxair">
+                </div>
+        
+                <div>
+                    <label for="Ersetzt">Ersetzt:</label>
+                    <input type="text" id="Ersetzt" name="Ersetzt" placeholder="Ersetzt">
+                </div>
+            </div>
+           
+            <button type="submit" class="add-item-button">ERSTELLEN</button>
+        </form>
+        
     </div>
 
     <script>

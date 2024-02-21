@@ -1,34 +1,43 @@
-
-
 body {
     margin: 0;
     font-family: Verdana, Tahoma, 'Segoe UI', Geneva, sans-serif;
-    background-color: #2c3e50; /* Blue background color */
+    background-color: #2c3e50; 
     color: #333;
 }
 
 .content {
-
-    margin-top: 170px; /* Adjust based on the height of your navbar */
-    margin-left: 300px;
-    margin-right: 50px; /* Add padding to the left to accommodate the sidebar */
-    padding: 20px;
-
-
+    margin-top: 170px;
+    margin-left:30px;
+    margin-right: 30px;
+    padding: 30px;
     overflow-y: auto;
-    height: calc(90vh - 160px); /* Adjust based on the height of your navbar */
-    background-color: snow; /* Snow background color */
-    border-radius: 15px; /* Rounded corners for top left */
+    background-color: snow; 
+    border-radius: 15px;
+}
+
+.navbar {
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    height: auto;
+    padding: 10px 20px; 
 
 }
 
-
-/* Action buttons */
 .action-button {
     width: 150px;
-    background-color: #3498db; /* Blue */
+    background-color: #3498db; 
     border: none;
-    color: #ffffff; /* White text color */
+    color: #ffffff; 
     padding: 10px 0;
     text-align: center;
     text-decoration: none;
@@ -41,151 +50,58 @@ body {
     font-weight: bolder;
 }
 
+.navbar-logo {
+    width:10%; 
+    max-width: 140px;
 
-
-/* Updated Navbar styles */
-.navbar {
-
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    height: 160px;
-    padding: 0 20px; /* Adjust padding */
 }
 
 .navbar-title {
+    margin-left: 50px;
     font-size: 24px;
     color: #ffffff;
-    margin-left: 100px;
-
-}
-
-.navbar-logo {
-    width: 120px; /* Fixed width for the logo */
-    height: 120px; /* Fixed height for the logo */
-    margin-left: 70px;
- /* Adjust margin */
-    flex: 0 0 auto; /* Prevent shrinking, growing, or being affected by available space */
 }
 
 .nav-buttons {
     display: flex;
     justify-content: center;
-    align-items: center; /* Align buttons vertically */
-    flex-grow: 1; /* Allow buttons to take remaining space */
+    align-items: center; 
+    flex-grow: 1;
+
 }
 
 .nav-buttons a {
-    text-decoration: none; /* Remove underline */
+    text-decoration: none; 
+    margin: 5px;
 }
 
-.nav-buttons .action-button {
-    width: 150px;
+.action-button {
+    width: 100%;
     background-color: #3498db;
     border: none;
     color: #ffffff;
-    padding: 10px 15px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    margin: 0 10px;
+    margin: 0px 5px;
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.3s ease;
     font-weight: bold;
 }
 
-.nav-buttons .action-button:hover {
-    background-color: #2980b9;
-}
-
-/* Button hover and active styles */
 .action-button:hover,
 .action-button.active {
-    background-color: #2980b9; /* Darker shade of blue on hover and when active */
-    border-bottom: 6px solid #f39c12; /* Orange bottom border for active button */
-}
-
-
-
-@media (max-width: 768px) {
-    .navbar-title,
-    .navbar-logo {
-        flex: 0 0 auto; /* Allow them to shrink but not grow */
-    }
-}
-
-
-
-
-/* Style for the sidebar */
-.sidebar {
-    width: 250px;
-    background-color: #2c3e50;
-    padding: 20px;
-    position: fixed;
-    top: 160px;
-    left: 0;
-    height: 100%;
-    overflow-y: auto;
-    z-index: 1000; /* Ensure the sidebar appears above other content */
-}
-
-/* Style for the sidebar buttons */
-.nav-buttons-side {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Style for the sidebar buttons */
-.nav-buttons-side a {
-    text-decoration: none;
-}
-
-/* Style for the sidebar buttons */
-.nav-buttons-side .action-button-side {
-    width: 100%; /* Make the buttons full width */
-    background-color: #3498db;
-    border: none;
-    color: #ffffff;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 0 0 10px; /* Add margin between buttons */
-    cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-/* Style for the sidebar buttons */
-.nav-buttons-side .action-button-side.active {
-    background-color: #2980b9; /* Darker shade of blue for active button */
-    border-bottom: 6px solid #f39c12; /* Orange bottom border for active button */
-}
-
-/* Hover effect for sidebar buttons */
-.nav-buttons-side .action-butto-side:hover {
-    background-color: #2980b9; /* Darker shade of blue on hover */
-}
-
-.action-button-side:hover,
-.action-button-side.active {
-    background-color: #2980b9; /* Darker shade of blue on hover and when active */
-    border-bottom: 6px solid #f39c12; /* Orange bottom border for active button */
+    background-color: #2980b9; 
+    border-bottom: 6px solid #f39c12; 
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
-    border: 1px solid darkgray; /* Add border to the table */
+    border: 1px solid darkgray; 
 }
 
 th, td {
@@ -194,7 +110,7 @@ th, td {
     text-align: center;
     white-space: nowrap;
     font-size: 12px;
-    border: 1px solid black; /* Add border to cells */
+    border: 1px solid black;
 }
 
 th {
@@ -203,11 +119,11 @@ th {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Set your desired gray color */
+    background-color: #f2f2f2; 
 }
 
 tbody tr:hover {
-    background-color: #cccccc; /* Light gray background color on hover */
+    background-color: #cccccc;
 }
 
 form {
@@ -223,7 +139,6 @@ label {
 }
 
 input {
-    
     padding: 8px;
     box-sizing: border-box;
     font-size: 10px;
@@ -236,60 +151,45 @@ button.delete, button.edit, button.pass, button.magnet, button.to-tls, button.to
     border: none;
     border-radius: 4px;
     cursor: pointer;
-
     margin: 0px 2px;
     width: 100%;
+    color: white;
 }
 
-/* Delete button */
 button.delete {
     background-color: #e74c3c;
-    color: white;
 }
 
-/* Edit button */
 button.edit {
     background-color: #be9f04;
-    color: white;
 }
 
-/* Pass button */
 button.pass {
     background-color: darkgreen;
-    color: white;
 }
 
-/* Magnet button */
 button.magnet {
     background-color: purple;
-    color: white;
 }
 
-/* To TLS button */
 button.to-tls {
     background-color: darkblue;
-    color: white;
 }
 
-/* To APEX button */
 button.to-apex {
     background-color: darkorange;
-    color: white;
 }
 
 button.to-zecher {
     background-color: palevioletred;
-    color: white;
 }
 
 button.to-cheshire {
     background-color: sienna;
-    color: white;
 }
 
-/* Button hover effect */
 button.delete:hover, button.edit:hover, button.pass:hover, button.magnet:hover, button.to-tls:hover, button.to-apex:hover, button.to-zecher:hover, button.to-cheshire:hover {
-    background-color: #2c3e50; /* Darken the background color on hover */
+    background-color: #2c3e50;
 }
 
 
@@ -308,6 +208,10 @@ input[type="text"]:focus {
     border-color: #2ecc71; 
 }
 
+input[type="text"]:hover {
+    background-color: #cccccc; 
+}
+
 
 input[type="text"]::placeholder {
     color: #aaa;
@@ -316,9 +220,10 @@ input[type="text"]::placeholder {
 
 
 .add-item-button {
-    padding: 8px 50px; /* Adjust padding as needed */
+    padding: 8px 50px; 
+    margin-top: 30px;
     font-size: 14px;
-    background-color: #2ecc71;
+    background-color: skyblue;
     color: white;
     border: none;
     border-radius: 4px;
@@ -327,28 +232,22 @@ input[type="text"]::placeholder {
 }
 
 .add-item-button:hover {
-    background-color: #28b463; /* Darken the background color on hover */
+    background-color: darkblue; 
 }
 
-.add-item-button:focus {
-    outline: none;
-}
-
-/* Darken editable cells on hover */
 td[contenteditable="true"].hovered-cell {
-    background-color: #cccccc; /* Darken background color on hover */
+    background-color: #cccccc; 
 }
 
-/* Style editable cells similarly to normal cells */
 td[contenteditable="true"] {
-    background-color: #f2f2f2; /* Match background color of normal cells */
-    padding: 8px; /* Match padding of normal cells */
-    border: 1px solid black; /* Match border of normal cells */
-    cursor: pointer; /* Show cursor pointer for editable cells */
+    background-color: #f2f2f2;
+    padding: 8px;
+    border: 1px solid black;
+    cursor: pointer;
 }
 
 .print-button {
-    background-color: darkblue; /* Green background */
+    background-color: darkblue;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -363,138 +262,53 @@ td[contenteditable="true"] {
     margin-bottom: 50px;
 }
 
-/* On mouse-over, add a darker background color */
 .print-button:hover {
     background-color: #2c3e50; 
 }
 
-        /* Style for the dropdown */
-        #filterDropdown {
-            padding: 10px; /* Add padding for better visibility and clickability */
-            font-size: 16px; /* Adjust font size */
-            width: 250px; /* Set width to make it bigger */
-            border-radius: 5px; /* Add some border-radius for a rounded appearance */
-            border: 1px solid #ccc; /* Add border for better separation */
-        }
-
-        /* Style for the label text */
-        .dropdown-label {
-            font-size: 18px; /* Adjust font size */
-            font-weight: bold; /* Add bold font weight */
-            margin-bottom: 10px; /* Add margin at the bottom for spacing */
-        }
-
-
-/* Style for the form container */
-.add-item-form {
-    max-width: 800px; /* Adjust maximum width as needed */
-    margin: 50px auto; /* Center the form horizontally and add margin at the top */
-    padding: 20px; /* Add padding to the form */
-    background-color: #f9f9f9; /* Light gray background color */
-    border-radius: 8px; /* Add some border-radius for a rounded appearance */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow for depth */
-    display: grid; /* Use grid layout for the form */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Create columns with minimum width of 200px */
-    grid-gap: 20px; /* Add gap between grid items */
-}
-
-/* Style for the form container */
-.add-item-form {
-    max-width: 800px; /* Adjust maximum width as needed */
-    margin: 50px auto; /* Center the form horizontally and add margin at the top */
-    padding: 20px; /* Add padding to the form */
-    background-color: #f9f9f9; /* Light gray background color */
-    border-radius: 8px; /* Add some border-radius for a rounded appearance */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow for depth */
-    display: grid; /* Use grid layout for the form */
-    grid-gap: 20px; /* Add gap between grid items */
-    grid-template-columns: 1fr 1fr; /* Two columns */
-}
-
-/* Style for form headings */
-.add-item-form h2 {
-    font-size: 24px; /* Adjust font size */
-    margin-bottom: 20px; /* Add margin at the bottom for spacing */
-    color: #333; /* Dark text color */
-    grid-column: 1 / -1; /* Span across all columns */
-}
-
-/* Style for form labels */
-.add-item-form label {
-    font-size: 14px; /* Adjust font size */
-    margin-bottom: 5px; /* Add margin at the bottom for spacing */
-    color: #333; /* Dark text color */
-}
-
-/* Style for form input fields */
-.add-item-form input[type="text"] {
-    padding: 8px; /* Adjust padding for input fields */
-    font-size: 14px; /* Adjust font size */
-    width: 100%; /* Make input fields full width */
-    border: 1px solid #ccc; /* Add border for input fields */
-    border-radius: 4px; /* Add some border-radius for a rounded appearance */
-    transition: border-color 0.3s; /* Add transition for border color change */
-}
-
-/* Style for form input fields on focus */
-.add-item-form input[type="text"]:focus {
-    outline: none; /* Remove default focus outline */
-    border-color: #2ecc71; /* Change border color on focus */
-}
-
-/* Style for form submit button */
-.add-item-form button.add-item-button {
-    padding: 12px 20px; /* Adjust padding for the button */
-    font-size: 16px; /* Adjust font size */
-    background-color: #2ecc71; /* Green background color */
-    color: #fff; /* White text color */
-    border: none; /* Remove button border */
-    border-radius: 4px; /* Add some border-radius for a rounded appearance */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s; /* Add transition for background color change */
-    grid-column: 1 / -1; /* Span across all columns */
-    justify-self: center; /* Center the button horizontally */
-    margin-top: 20px; /* Add margin at the top */
-}
-
-/* Style for form input fields placed on the left side */
-.add-item-form .left-inputs {
-    grid-column: 1 / span 1; /* Span one column */
-}
-
-/* Style for form input fields placed in the middle */
-.add-item-form .middle-inputs {
-    grid-column: 2 / span 1; /* Span one column */
-}
-/* Modern style for the "Add New Item" button */
 .add-new-item-button {
-    padding: 12px 20px; /* Adjust padding for the button */
-    font-size: 16px; /* Adjust font size */
-    background-color: #4CAF50; /* Green background color */
-    color: white; /* White text color */
-    border: none; /* Remove button border */
-    border-radius: 6px; /* Add some border-radius for a rounded appearance */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s; /* Add transition for background color change */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Display as inline block */
-    margin-bottom: 100px; /* Add margin at the bottom */
-    margin-top:50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: darkblue;
+    color: white;
+    border: none; 
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none; 
+    display: inline-block; 
 }
 
-/* Hover effect for the button */
 .add-new-item-button:hover {
-    background-color: #45a049; /* Darker green background color on hover */
+    background-color: #45a049; 
 }
 
 .filter-wrapper {
-    position: fixed;
-    top: 110px;
-    left: 300px;
-    padding:10px;
-    background-color: #fff;
-    width:max-content;
+    margin-top:20px;
+    padding:30px 0px;
+    width:auto;;
     border-radius: 10px;
+}
 
-    z-index: 1000; /* Ensure it appears above other content */
+#filterDropdown {
+    padding: 10px; 
+    font-size: 16px;
+    width: 250px; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-label {
+    font-size: 18px; 
+    font-weight: bold;
+    margin-bottom: 10px; 
+    width: 150px;
+}
+
+
+@media (max-width: 768px) {
+    .navbar-title,
+    .navbar-logo {
+        flex: 0 0 auto;
+    }
 }

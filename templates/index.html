@@ -9,37 +9,34 @@
 
 </head>
 <body>
+
     {% include 'navbar.html' %}
-    {% include 'side_bar.html' %}
 
-    <div class="filter-wrapper">
-        <!-- Add label text for the dropdown -->
-        <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
-
-        <!-- Add a larger and styled dropdown -->
-        <select id="filterDropdown" onchange="filterTable()">
-            <option value="all">Alle</option>
-            <!-- Add options for unique values of Maschine attribute -->
-            {% set maschinen = [] %}
-            {% for item in inventar_data %}
-                {% for maschine in item.Maschine.split('/') %}
-                    {% if maschine.strip() not in maschinen %}
-                        {% set _ = maschinen.append(maschine.strip()) %}
-                        <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        </select>
-     </div>
-    
-    
     <div class="content">
 
+        <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
 
+        <div class="filter-wrapper">
+            <!-- Add label text for the dropdown -->
+            <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
+    
+            <!-- Add a larger and styled dropdown -->
+            <select id="filterDropdown" onchange="filterTable()">
+                <option value="all">Alle</option>
+                <!-- Add options for unique values of Maschine attribute -->
+                {% set maschinen = [] %}
+                {% for item in inventar_data %}
+                    {% for maschine in item.Maschine.split('/') %}
+                        {% if maschine.strip() not in maschinen %}
+                            {% set _ = maschinen.append(maschine.strip()) %}
+                            <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </select>
+         </div>
 
-
-
-
+         
     
         <table id="inventoryTable">
             <thead>
@@ -124,33 +121,12 @@
             </tbody>
         </table>
 
-         <!-- Add New Item button -->
-<a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
+       
 
         
     </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // Get the current path
-    var currentPath = window.location.pathname;
 
-    // Get all navbar buttons
-    var navButtons = document.querySelectorAll('.nav-buttons-side a');
-
-    // Loop through each navbar button
-    navButtons.forEach(function(button) {
-        // Get the href attribute of the button
-        var buttonUrl = button.getAttribute('href');
-
-        // Check if the current path matches the button's URL
-        if (currentPath === buttonUrl) {
-            // Add the 'active' class to the parent button
-            button.querySelector('button').classList.add('active');
-        }
-    });
-});
-</script>
     
 <script>
     function filterTable() {

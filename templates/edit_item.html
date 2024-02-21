@@ -9,10 +9,10 @@
 <body>
 
     {% include 'navbar.html' %}
-    {% include 'side_bar.html' %}
+
 
     <div class="content">
-    <h1>Edit Item</h1>
+    <h1>Ändern</h1>
 
     <form id="editForm" action="{{ url_for('edit_item', elco_nummer_edit=item['ELCO_Nummer']) }}" method="POST">
 
@@ -71,7 +71,7 @@
             <input type="text" id="Ersetzt" name="Ersetzt" value="{{ item['Ersetzt'] }}" placeholder="Ersetzt"><br>
 
         
-        <button type="submit">Save Changes</button>
+        <button class="add-item-button" type="submit">Ändern</button>
     </form>
 </div>
     <script>

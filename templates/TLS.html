@@ -14,9 +14,9 @@
 
 <body>
     {% include 'navbar.html' %}
-    {% include 'side_bar.html' %}
 
-        <div class="content">
+
+    <div class="content">
 
     <a class="print-button" href="/tls_auftrag">PRINT Auftrag</a>
     <a class="print-button" href="/tls_begleitschein">PRINT Begleitschein</a>         
@@ -70,27 +70,7 @@
     </table>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        // Get the current path
-        var currentPath = window.location.pathname;
-    
-        // Get all navbar buttons
-        var navButtons = document.querySelectorAll('.nav-buttons-side a');
-    
-        // Loop through each navbar button
-        navButtons.forEach(function(button) {
-            // Get the href attribute of the button
-            var buttonUrl = button.getAttribute('href');
-    
-            // Check if the current path matches the button's URL
-            if (currentPath === buttonUrl) {
-                // Add the 'active' class to the parent button
-                button.querySelector('button').classList.add('active');
-            }
-        });
-    });
-    </script>
+
 <script>
     // Function to handle changes in editable cells
 function handleCellChange(elcoNum, field, value) {

@@ -5,8 +5,34 @@
     <img src="{{ url_for('static', filename='img/elco_logo.jpg') }}" alt="Elco Logo" class="navbar-logo">
     <h1 class="navbar-title">Farbmeister App - Rasterwalzen</h1>
 
-
-    
-    
+    <div class="nav-buttons">
+        <a href="/"><button class="action-button">INVENTAR</button></a>
+        <a href="/tls_page"><button class="action-button">TLS</button></a>
+        <a href="/apex_page"><button class="action-button">APEX</button></a>
+        <a href="/zecher_page"><button class="action-button">Zecher</button></a>
+        <a href="/cheshire_page"><button class="action-button">Cheshire</button></a>
+        <a href="/memo"><button class="action-button">MEMO</button></a>
+    </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Get the current path
+    var currentPath = window.location.pathname;
+
+    // Get all navbar buttons
+    var navButtons = document.querySelectorAll('.nav-buttons a');
+
+    // Loop through each navbar button
+    navButtons.forEach(function(button) {
+        // Get the href attribute of the button
+        var buttonUrl = button.getAttribute('href');
+
+        // Check if the current path matches the button's URL
+        if (currentPath === buttonUrl) {
+            // Add the 'active' class to the parent button
+            button.querySelector('button').classList.add('active');
+        }
+    });
+});
+</script>
