@@ -108,20 +108,21 @@ td.empty-cell {
 
 #print_button {
     margin-top: 0px;
-    margin-left: 50px;
-    margin-bottom: 20px;
-    padding: 15px 30px; /* Increase padding for a larger button */
-    width: 250px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    padding: 10px 0px; /* Increase padding for a larger button */
+    width: 150px;
     font-weight: bold; /* Use 'bold' instead of 'bolder' for stronger emphasis */
     font-size: large;
-    background-color: #007bff; /* Vibrant blue color */
+    background-color: #2c3e50; /* Vibrant blue color */
     border: none; /* Remove the border for a cleaner look */
     color: #fff;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    border-radius: 30px; /* Increase border radius for a rounder button */
+    border-radius: 10px; /* Increase border radius for a rounder button */
     transition: background-color 0.3s ease, transform 0.2s ease; /* Add transition for background-color and transform */
 }
 

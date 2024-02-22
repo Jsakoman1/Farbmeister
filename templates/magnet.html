@@ -13,6 +13,10 @@
         {% include 'navbar.html' %}
     </div>
     <div class="content">
+    <div id="not-printable">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+    </div>
+
     <div id="printable">
         <table  class="magnet-table" border="1">
             <tbody>
@@ -51,6 +55,11 @@
             window.print();
         }
     </script>
+            <script>
+                function redirectToIndexPage() {
+                    window.location.href = "{{ url_for('index') }}";
+                }
+            </script>
 </div>
 </body>
 </html>

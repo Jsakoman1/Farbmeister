@@ -15,6 +15,7 @@
     <div class="content">
 
         <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
+        
 
         <div class="filter-wrapper">
             <!-- Add label text for the dropdown -->
@@ -37,7 +38,7 @@
          </div>
 
          
-    
+
         <table id="inventoryTable">
             <thead>
                 <tr>
@@ -45,14 +46,16 @@
                     <th>Ändern</th>
                     <th>Pass</th>
                     <th>Magnet</th>
-                    <th>TLS</th>
-                    <th>APEX</th>
-                    <th>Zecher</th>
-                    <th>Cheshire</th>
 
-                    {% for category in inventar_data[0].__dict__.keys() %}
-                        <th>{{ category }}</th>
+                    {% for lieferant in lieferanten_data %}
+                        <th>{{ lieferant.name }}</th>
                     {% endfor %}
+
+                    {% if inventar_data %}
+                        {% for category in inventar_data[0].__dict__.keys() %}
+                            <th>{{ category }}</th>
+                        {% endfor %}
+                    {% endif %}
 
                 </tr>
             </thead>
@@ -84,30 +87,18 @@
                                 <button class="magnet" type="submit">Magnet</button>
                             </form>
                         </td>
-                        <td>
-                            <form action="{{ url_for('to_tls') }}" method="post">
-                                <input type="hidden" name="elco_nummer_tls" value="{{ item.ELCO_Nummer }}">
-                                <button class="to-tls" type="submit">To TLS</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ url_for('to_apex') }}" method="post">
-                                <input type="hidden" name="elco_nummer_apex" value="{{ item.ELCO_Nummer }}">
-                                <button class="to-apex" type="submit">To APEX</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ url_for('to_zecher') }}" method="post">
-                                <input type="hidden" name="elco_nummer_zecher" value="{{ item.ELCO_Nummer }}">
-                                <button class="to-zecher" type="submit">To Zecher</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ url_for('to_cheshire') }}" method="post">
-                                <input type="hidden" name="elco_nummer_cheshire" value="{{ item.ELCO_Nummer }}">
-                                <button class="to-cheshire" type="submit">To Cheshire</button>
-                            </form>
-                        </td>
+                       
+
+                        {% for lieferant in lieferanten_data %}
+                            <td>
+                                <form action="{{ url_for('to_lieferant', lieferant_name=lieferant.name) }}" method="post">
+                                    <input type="hidden" name="elco_nummer" value="{{ item.ELCO_Nummer }}">
+                                    <button class="to-lieferant" type="submit">To {{ lieferant.name }}</button>
+                                </form>
+                                
+                                
+                            </td>
+                        {% endfor %}
                     
 
                         {% for value in item.__dict__.values() %}
@@ -122,7 +113,7 @@
         </table>
 
        
-
+        
         
     </div>
 
@@ -147,6 +138,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>

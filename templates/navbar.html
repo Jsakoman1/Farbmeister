@@ -7,13 +7,16 @@
 
     <div class="nav-buttons">
         <a href="/"><button class="action-button">INVENTAR</button></a>
-        <a href="/tls_page"><button class="action-button">TLS</button></a>
-        <a href="/apex_page"><button class="action-button">APEX</button></a>
-        <a href="/zecher_page"><button class="action-button">Zecher</button></a>
-        <a href="/cheshire_page"><button class="action-button">Cheshire</button></a>
+        
+        
+        {% for lieferant in lieferanten_data %}
+        <a href="/lieferant/{{ lieferant.name }}"><button class="action-button">{{ lieferant.name }}</button></a>
+        {% endfor %}
         <a href="/memo"><button class="action-button">MEMO</button></a>
+        <a href="/lieferanten"><button class="action-button">Einstellungen</button></a>
     </div>
 </div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

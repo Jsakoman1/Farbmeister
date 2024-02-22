@@ -1,3 +1,32 @@
 [
-
+    {
+        "ELCO_Nummer": "202A01",
+        "Maschine": "202",
+        "Mass": "102 x 440",
+        "Produktion_Nummer": "AB 87685",
+        "L_cm": 260,
+        "my": null,
+        "cm3": 5.2,
+        "seitl_rand": "",
+        "qual": "",
+        "schutzring": "",
+        "text": "",
+        "bemerkung": "",
+        "datum": ""
+    },
+    {
+        "ELCO_Nummer": "202B15",
+        "Maschine": "202/627.99",
+        "Mass": "102 x 450",
+        "Produktion_Nummer": "AB 57239",
+        "L_cm": 160,
+        "my": null,
+        "cm3": 6.5,
+        "seitl_rand": "",
+        "qual": "",
+        "schutzring": "",
+        "text": "",
+        "bemerkung": "",
+        "datum": ""
+    }
 ]

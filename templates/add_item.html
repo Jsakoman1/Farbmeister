@@ -13,6 +13,7 @@
 
 
     <div class="content">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
 
         <form id="addItemForm" action="/add_item" method="post" class="add-item-form">
             <h2>Neue Rasterwalze erstellen</h2>
@@ -162,6 +163,11 @@ document.getElementById("addItemForm").addEventListener("submit", function(event
         });
     });
     </script>
+            <script>
+                function redirectToIndexPage() {
+                    window.location.href = "{{ url_for('index') }}";
+                }
+            </script>
     </body>
     </html>
     

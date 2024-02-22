@@ -43,6 +43,7 @@
     {% include 'navbar.html' %}
 
     <div class="content">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
         <div class="gallery">
             <!-- Gallery items -->
             <div class="gallery-item">
@@ -84,6 +85,12 @@
         </div>
         
 </div>
+<script>
+    function redirectToIndexPage() {
+        window.location.href = "{{ url_for('index') }}";
+    }
+</script>
+
 
 </body>
 </html>

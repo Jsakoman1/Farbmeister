@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <title>{{ lieferant_name }} Data</title>
+    <!-- Add any CSS or JavaScript links here -->
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="content">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+        <div class="auftrag-buttons-group">
+            <a class="print-button" onclick="redirectToAuftragPage()">Auftrag</a>
+            <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>        
+        </div>
+        <button id="saveChangesButton">Änderungen speichern</button>
+    
+        <h1>{{ lieferant_name }} Data</h1>
+        <table border="1" id="lieferantTable">
+            <thead>
+                <tr>
+                    <th>Löschen</th>
+                    <th>ELCO_Nummer</th>
+                    <th>Maschine</th>
+                    <th>Mass</th>
+                    <th>Produktion_Nummer</th>
+                    <th>L_cm</th>
+                    <th>My</th>
+                    <th>Cm3</th>
+                    <th>Seitl_Rand</th>
+                    <th>Qual</th>
+                    <th>Schutzring</th>
+                    <th>Text</th>
+                    <th>Bemerkung</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populate table content from TLS.json -->
+                {% if lieferant_data %}
+                    {% for item in lieferant_data %}
+                        <tr>
+                            <td>
+                                <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item_lieferant', lieferant_name=lieferant_name, elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
+
+                                    <button class="delete" type="submit" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
+                                </form>
+                                
+                            </td>
+                            <td>{{ item.ELCO_Nummer }}</td>
+                            <td>{{ item.Maschine }}</td>
+                            <td>{{ item.Mass }}</td>
+                            <td>{{ item.Produktion_Nummer }}</td>
+                            <td>{{ item.L_cm }}</td>
+                            <td>{{ item.my }}</td>
+                            <td>{{ item.cm3 }}</td>
+                            <td contenteditable="true" id="seitl_rand_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'seitl_rand', this.innerText)">{{ item.seitl_rand }}</td>
+                            <td contenteditable="true" id="qual_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'qual', this.innerText)">{{ item.qual }}</td>
+                            <td contenteditable="true" id="schutzring_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'schutzring', this.innerText)">{{ item.schutzring }}</td>
+                            <td contenteditable="true" id="text_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'text', this.innerText)">{{ item.text }}</td>
+                            <td contenteditable="true" id="bemerkung_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'bemerkung', this.innerText)">{{ item.bemerkung }}</td>
+                            <td contenteditable="true" id="datum_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'datum', this.innerText)">{{ item.datum }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="14">No data available for this Lieferant.</td>
+                        </tr>
+                    {% endif %}
+            </tbody>
+        </table>
+        </div>
+    
+    
+        <script>
+            // Define a variable to store pending changes
+            let pendingChanges = [];
+        
+            // Function to handle cell changes and store pending changes
+            function handleCellChange(elcoNum, field, value) {
+                pendingChanges.push({ elcoNum: elcoNum, field: field, value: value });
+            }
+        
+            // Function to save pending changes
+            function saveChanges(url) {
+                // Send an AJAX POST request to save the pending changes
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(pendingChanges),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Reload cell values from JSON data
+                    reloadCellValues(data);
+                    // Clear pendingChanges array after saving
+                    pendingChanges = [];
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
+        
+            // Add event listener to the "Save Changes" button
+    // Add event listener to the "Save Changes" button
+            document.getElementById('saveChangesButton').addEventListener('click', function() {
+                saveChanges('/save_changes_lieferant/{{ lieferant_name }}');
+            });
+        </script>
+        <script>
+            // Function to redirect to lieferant_auftrag page with lieferant_name parameter
+            function redirectToAuftragPage(lieferant_name) {
+                window.location.href = "{{ url_for('lieferant_auftrag', lieferant_name=lieferant_name) }}";
+            }
+        </script>
+        <script>
+            
+            function redirectToBegleitscheinPage(lieferant_name) {
+                window.location.href = "{{ url_for('lieferant_begleitschein', lieferant_name=lieferant_name) }}";
+            }
+        </script>
+        <script>
+            function redirectToIndexPage() {
+                window.location.href = "{{ url_for('index') }}";
+            }
+        </script>
+        
+    
+    </body>
+    </html>

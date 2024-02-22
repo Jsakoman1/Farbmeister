@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <title>Add Lieferant</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="content">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+    <h1>Add Lieferant</h1>
+
+    <form action="/lieferanten/add" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="adresse">Adresse:</label>
+        <input type="text" id="adresse" name="adresse"><br>
+
+        <label for="note">Note:</label>
+        <input type="text" id="note" name="note"><br>
+
+        <label for="kontakt">Kontakt:</label>
+        <input type="text" id="kontakt" name="kontakt"><br>
+
+        <label for="b_kontakt">Begleitschein Kontakt:</label>
+        <input type="text" id="b_kontakt" name="b_kontakt"><br>
+
+
+        <button class="add-item-button" type="submit">Speichern</button>
+    </form>
+    </div>
+
+    <script>
+        function redirectToIndexPage() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
+
+</body>
+</html>
