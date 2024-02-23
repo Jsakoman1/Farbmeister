@@ -382,6 +382,7 @@ button.lieferant-edit:hover {
     color: #f39c12;
     margin-top: 0;
     margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #rasterwalze-add-new {

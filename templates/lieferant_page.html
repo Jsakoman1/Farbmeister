@@ -25,13 +25,14 @@
 
     <div class="content">
         <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+        <h1 class="pagetitle">{{ lieferant_name }}</h1>
         <div class="auftrag-buttons-group">
             <a class="print-button" onclick="redirectToAuftragPage()">Auftrag</a>
             <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>        
         </div>
         <button id="saveChangesButton">Text Änderungen speichern</button>
 
-        <h1>Pallete Mengen</h1>
+        <h2>Pallete Mengen</h1>
         <table>
 
             <tr>
@@ -52,7 +53,7 @@
             </tr>
         </table>
 
-        <h1>{{ lieferant_name }} Defekten Rasterwalzen</h1>
+        <h2>Defekte Rasterwalzen:</h1>
         <table border="1" id="lieferantTable">
             <thead>
                 <tr>
