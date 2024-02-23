@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choice of Lieferant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <style>
+        /* Button styling */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .to-lieferant {
+            width: auto; /* Allow the buttons to adjust their width based on content */
+            padding: 25px 50px; /* Increased padding to make the buttons larger */
+            font-size: 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            color: black;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .to-lieferant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="content">
+        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+        <h1>Wählen Sie Ihren Lieferanten für Rasterwalzen: {{ elco_nummer }}</h1>
+        <div class="button-container" id="button-container">
+            {% for lieferant in lieferanten_data %}
+                <form action="{{ url_for('to_lieferant', lieferant_name=lieferant.name) }}" method="post">
+                    <input type="hidden" name="elco_nummer" value="{{ elco_nummer }}">
+                    <button class="to-lieferant" id="button-{{ loop.index }}">{{ lieferant.name }}</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.to-lieferant');
+            const pastelColors = [
+                '#FF5733', // Strong orange
+                '#FFC300', // Vivid yellow
+                '#FF0066', // Intense pink
+                '#CC00FF', // Bright purple
+                '#33FF99', // Bright turquoise
+                '#00FF00', // Vivid green
+                '#3366FF', // Bright blue
+                '#FF3300', // Strong red
+                '#6600FF', // Deep purple
+                '#00FFCC'  // Bright cyan
+            ];
+
+            buttons.forEach(function(button, index) {
+                button.style.backgroundColor = pastelColors[index % pastelColors.length];
+                button.style.padding = '30px 60px'; // Adjust padding here
+                button.style.fontSize = '25px'; // Font size
+                button.style.border = '1px solid black'; // Border
+                button.style.borderRadius = '8px'; // Border radius
+                button.style.cursor = 'pointer'; // Cursor
+                button.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)'; // Box shadow
+                button.style.transition = 'all 0.3s ease'; // Transition
+            });
+        });
+
+    </script>
+    <script>   
+            function redirectToIndexPage() {
+                window.location.href = "{{ url_for('index') }}";
+            }
+    </script>
+</body>
+</html>

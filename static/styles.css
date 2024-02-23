@@ -131,7 +131,7 @@ input {
     width: 100%;
 }
 
-button.delete, button.edit, button.pass, button.magnet, button.to-lieferant {
+button.delete, button.edit, button.pass, button.magnet, button.to-defekt {
     padding: 8px 5px;
     font-size: 10px;
     border: none;
@@ -143,31 +143,29 @@ button.delete, button.edit, button.pass, button.magnet, button.to-lieferant {
 }
 
 button.delete {
-    background-color: #e74c3c;
+    background-color: red;
 }
 
 button.edit {
-    background-color: #be9f04;
+    background-color: sienna;
 }
 
 button.pass {
-    background-color: darkgreen;
+    background-color: goldenrod;
 }
 
 button.magnet {
+    background-color: #e74c3c;
+}
+
+button.to-defekt {
     background-color: purple;
 }
 
-button.to-lieferant{
-    background-color: darkblue;
-}
-
-
-button.delete:hover, button.edit:hover, button.pass:hover, button.magnet:hover, button.to-lieferant:hover {
+button.delete:hover, button.edit:hover, button.pass:hover, button.magnet:hover, button.to-defekt:hover {
     background-color: #2c3e50;
     transform: scale(1.05);
 }
-
 
 input[type="text"] {
     padding: 8px;
@@ -215,16 +213,8 @@ input[type="text"]::placeholder {
     transform: scale(1.05);
 }
 
-td[contenteditable="true"].hovered-cell {
-    background-color: #cccccc;
-}
 
-td[contenteditable="true"] {
-    background-color: #f2f2f2;
-    padding: 8px;
-    border: 1px solid black;
-    cursor: pointer;
-}
+
 .auftrag-buttons-group {
     display: flex;
     justify-content: center;
@@ -392,6 +382,11 @@ button.lieferant-edit:hover {
     color: #f39c12;
     margin-top: 0;
     margin-bottom: 50px;
+}
+
+#rasterwalze-add-new {
+    margin-top: 30px;
+    text-align: center;
 }
 
 @media (max-width: 900px) {

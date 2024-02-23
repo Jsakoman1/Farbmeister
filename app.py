@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 
 
 class Rasterwalze:
-    def __init__(self, Maschine, Mass, ELCO_Nummer, Produktion_Nummer, L_cm, my, cm3, wo, erneuert, int_ausgang, int_eingang, bemerkung, prod_nr_2, alte_nummer, Cheshire, Apex, Praxair, Ersetzt):
+    def __init__(self, Maschine, Mass, ELCO_Nummer, Produktion_Nummer, L_cm, my, cm3, wo, erneuert, int_ausgang, bemerkung, prod_nr_2, alte_nummer):
         self.ELCO_Nummer = ELCO_Nummer
         self.Maschine = Maschine
         self.Mass = Mass
@@ -16,14 +16,10 @@ class Rasterwalze:
         self.wo = wo
         self.erneuert = erneuert
         self.int_ausgang = int_ausgang
-        self.int_eingang = int_eingang
         self.bemerkung = bemerkung
         self.prod_nr_2 = prod_nr_2
         self.alte_nummer = alte_nummer
-        self.Cheshire = Cheshire
-        self.Apex = Apex
-        self.Praxair = Praxair
-        self.Ersetzt = Ersetzt
+  
 
 class Lieferanten:
     def __init__(self, name, adresse, note, verpackung, masse_x, masse_y, masse_z, masse_xyz, gewicht, kontakt, b_kontakt):
@@ -50,7 +46,7 @@ class FarbmeisterApp:
         self.lieferanten_file_path = os.path.join(os.path.dirname(__file__), lieferanten_file)
         self.load_and_sort_inventar()
         self.load_lieferanten_data()
-        self.check_json_files()  # Check and create JSON files if they don't exist
+        self.check_json_files()  
 
     def check_json_files(self):
         json_files = [self.inventar_file_path, self.lieferanten_file_path]
@@ -63,7 +59,7 @@ class FarbmeisterApp:
     def extract_numeric_parts(self, elco_nummer_part):
         try:
             if elco_nummer_part is not None:
-                cleaned_part = elco_nummer_part.replace(" ", "")  # Remove whitespace
+                cleaned_part = elco_nummer_part.replace(" ", "")  
                 return int(cleaned_part)
         except ValueError:
             return float('inf')
@@ -91,7 +87,7 @@ class FarbmeisterApp:
             print(f"ELCO_Nummer: {item.ELCO_Nummer}, Maschine: {item.Maschine}, Mass: {item.Mass}")
 
     def add_item(self, item):
-        new_item = Rasterwalze(**item)  # Create a Rasterwalze object
+        new_item = Rasterwalze(**item) 
         self.inventar_data.append(new_item)
         self.save_inventar()
 
@@ -224,14 +220,9 @@ def add_item():
         "wo": request.form.get('wo', 'null'),
         "erneuert": request.form.get('erneuert', 'null'),
         "int_ausgang": request.form.get('int_ausgang', 'null'),
-        "int_eingang": request.form.get('int_eingang', 'null'),
         "bemerkung": request.form.get('bemerkung', 'null'),
         "prod_nr_2": request.form.get('prod_nr_2', 'null'),
-        "alte_nummer": request.form.get('alte_nummer', 'null'),
-        "Cheshire": request.form.get('Cheshire', 'null'),
-        "Apex": request.form.get('Apex', 'null'),
-        "Praxair": request.form.get('Praxair', 'null'),
-        "Ersetzt": request.form.get('Ersetzt', 'null')
+        "alte_nummer": request.form.get('alte_nummer', 'null')
     }
 
     farbmeister_app.add_item(item)
@@ -258,7 +249,6 @@ def delete_item(elco_nummer_delete):
 
 @app.route('/edit_item/<elco_nummer_edit>', methods=['GET', 'POST'])
 def edit_item(elco_nummer_edit):
-    # Find the item to edit based on elco_nummer
     item_to_edit = None
     for item in farbmeister_app.inventar_data:
         if item.ELCO_Nummer == elco_nummer_edit:
@@ -280,14 +270,10 @@ def edit_item(elco_nummer_edit):
             item_to_edit.wo = request.form.get('wo', 'null')
             item_to_edit.erneuert = request.form.get('erneuert', 'null')
             item_to_edit.int_ausgang = request.form.get('int_ausgang', 'null')
-            item_to_edit.int_eingang = request.form.get('int_eingang', 'null')
             item_to_edit.bemerkung = request.form.get('bemerkung', 'null')
             item_to_edit.prod_nr_2 = request.form.get('prod_nr_2', 'null')
             item_to_edit.alte_nummer = request.form.get('alte_nummer', 'null')
-            item_to_edit.Cheshire = request.form.get('Cheshire', 'null')
-            item_to_edit.Apex = request.form.get('Apex', 'null')
-            item_to_edit.Praxair = request.form.get('Praxair', 'null')
-            item_to_edit.Ersetzt = request.form.get('Ersetzt', 'null')
+
 
 
         farbmeister_app.save_inventar()
@@ -301,43 +287,31 @@ def edit_item(elco_nummer_edit):
 @app.route('/pass', methods=['GET', 'POST'])
 def pass_page():
     if request.method == 'POST':
-        # Get the item elco_nummer from the form data
         elco_nummer_pass = request.form['elco_nummer_pass']
-
-        # Retrieve the specific item from the inventory data
         item_to_pass = next((item for item in farbmeister_app.inventar_data if item.ELCO_Nummer == elco_nummer_pass), None)
 
         if item_to_pass:
-            # Render the 'pass.html' template with the item data
             return render_template('pass.html', item=item_to_pass)
 
-    # If the request method is not POST or the item was not found, redirect to the main page
     return redirect(url_for('index'))
 
 @app.route('/magnet', methods=['GET', 'POST'])
 def magnet_page():
     if request.method == 'POST':
-        # Get the item elco_nummer from the form data
         elco_nummer_magnet = request.form['elco_nummer_magnet']
-
-        # Retrieve the specific item from the inventory data
         item_for_magnet = next((item for item in farbmeister_app.inventar_data if item.ELCO_Nummer == elco_nummer_magnet), None)
 
         if item_for_magnet:
-            # Pass today's date to the HTML template
             today_date = datetime.now().strftime('%d.%m.%Y')
 
-            # Render the 'magnet.html' template with the item data and today's date
             return render_template('magnet.html', item=item_for_magnet, default_date=today_date)
 
-    # If the request method is not POST or the item was not found, redirect to the main page
     return redirect(url_for('index'))
 
 
 
 
 def load_json_data(file_name):
-    # Get the directory where the Python script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, file_name)
 
@@ -351,7 +325,6 @@ def load_json_data(file_name):
         return None
 
 def save_json_data(data, file_name):
-    # Get the directory where the Python script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, file_name)
 
@@ -394,39 +367,37 @@ def add_lieferant():
             "gewicht": "",
         }
         farbmeister_app.add_lieferant(lieferant)
-        return redirect(url_for('show_lieferanten'))  # Redirect to the show_lieferanten route
+        return redirect(url_for('show_lieferanten'))  
     else:
-        # If the request method is GET, render the add_lieferant.html template
+
         return render_template('add_lieferant.html')
 
 
 @app.route('/lieferanten/edit/<string:name>', methods=['GET'])
 def edit_lieferant_page(name):
-    # Find the Lieferant based on the name
+
     lieferant = farbmeister_app.find_lieferant_by_name(name)
     return render_template('edit_lieferant.html', lieferant=lieferant)
 
 
 @app.route('/lieferanten/edit/<string:name>', methods=['GET', 'POST'])
 def edit_lieferant(name):
-    # Find the Lieferant based on the name
+
     lieferant = farbmeister_app.find_lieferant_by_name(name)
 
     if lieferant is None:
         return redirect(url_for('show_lieferanten'))
 
     if request.method == 'POST':
-        # Update the Lieferant data based on form inputs
+
         lieferant['name'] = request.form.get('name')
         lieferant['adresse'] = request.form.get('adresse')
         lieferant['note'] = request.form.get('note')
         lieferant['kontakt'] = request.form.get('kontakt')
         lieferant['b_kontakt'] = request.form.get('b_kontakt')
 
-        # Save the updated Lieferanten data
         farbmeister_app.save_lieferanten_data()
 
-        # Rename the JSON file if the name has changed
         new_name = request.form.get('name')
         if new_name != name:
             old_filename = f"{name}.json"
@@ -436,7 +407,7 @@ def edit_lieferant(name):
             if os.path.exists(old_file_path):
                 os.rename(old_file_path, new_file_path)
 
-        return redirect(url_for('show_lieferanten'))  # Redirect to the show_lieferanten route
+        return redirect(url_for('show_lieferanten')) 
 
     return render_template('edit_lieferant.html', lieferant=lieferant)
 
@@ -451,7 +422,13 @@ def delete_lieferant(name):
 def lieferant_page(lieferant_name):
     lieferant_data = load_json_data(f"{lieferant_name}.json")
     lieferanten_data = load_json_data("lieferanten.json")["lieferanten"]
-    return render_template('lieferant_page.html', lieferant_name=lieferant_name, lieferant_data=lieferant_data, lieferanten_data=lieferanten_data)
+
+    lieferant = None
+    for item in lieferanten_data:
+        if item["name"] == lieferant_name:
+            lieferant = item
+            break
+    return render_template('lieferant_page.html', lieferant_name=lieferant_name, lieferant_data=lieferant_data, lieferanten_data=lieferanten_data,lieferant=lieferant)
 
 @app.route('/delete_item_lieferant/<lieferant_name>/<elco_nummer_delete>', methods=['POST'])
 def delete_item_lieferant(lieferant_name, elco_nummer_delete):
@@ -463,19 +440,14 @@ def delete_item_lieferant(lieferant_name, elco_nummer_delete):
 @app.route('/to_lieferant/<lieferant_name>', methods=['POST'])
 def to_lieferant(lieferant_name):
     if request.method == 'POST':
-        elco_nummer = request.form.get('elco_nummer')  # Assuming elco_nummer is submitted via form data
-
-        # Load data for the specific lieferant
+        elco_nummer = request.form.get('elco_nummer')  
         lieferant_data = load_json_data(f"{lieferant_name}.json")
 
-        # Check if the ELCO number already exists in the lieferant data
         if any(item['ELCO_Nummer'] == elco_nummer for item in lieferant_data):
             return redirect(url_for('lieferant_page', lieferant_name=lieferant_name))
 
-        # Retrieve item from inventory data
         item_from_inventory = next((item for item in farbmeister_app.inventar_data if item.ELCO_Nummer == elco_nummer), None)
         if item_from_inventory:
-            # Append the item to the lieferant data
             lieferant_data.append({
                 "ELCO_Nummer": item_from_inventory.ELCO_Nummer,
                 "Maschine": item_from_inventory.Maschine,
@@ -493,8 +465,26 @@ def to_lieferant(lieferant_name):
             })
             save_json_data(lieferant_data, f"{lieferant_name}.json")
 
-    # Redirect to the corresponding lieferant page after processing
     return redirect(url_for('lieferant_page', lieferant_name=lieferant_name))
+
+@app.route('/save_changes', methods=['POST'])
+def save_changes():
+    data = request.json
+    with open('lieferanten.json', 'r') as file:
+        existing_data = json.load(file)
+
+    for lieferant in existing_data['lieferanten']:
+        if lieferant['name'] == data['name']:
+            lieferant['verpackung'] = data['verpackung']
+            lieferant['masse_x'] = data['masse_x']
+            lieferant['masse_y'] = data['masse_y']
+            lieferant['masse_z'] = data['masse_z']
+            lieferant['gewicht'] = data['gewicht']
+
+    with open('lieferanten.json', 'w') as file:
+        json.dump(existing_data, file, indent=4)
+
+    return jsonify({'message': 'Changes saved successfully'})
 
 @app.route('/save_changes_lieferant/<lieferant_name>', methods=['POST'])
 def save_changes_lieferant(lieferant_name):
@@ -502,30 +492,23 @@ def save_changes_lieferant(lieferant_name):
 
     lieferant_data = load_json_data(f"{lieferant_name}.json")
 
-    # Update the existing data with the changes sent from the client
     for change in data:
         elco_num = change['elcoNum']
         field = change['field']
         value = change['value']
 
-        # Clean the cell value: remove leading and trailing whitespace
         value = value.strip()
 
-        # Replace '\n' with empty string if the value consists only of whitespace characters
         if value == '\n':
             value = ''
 
-        # Find the item with the corresponding ELCO_Nummer
         for item in lieferant_data:
             if item['ELCO_Nummer'] == elco_num:
-                # Update the specified field
                 item[field] = value
                 break
 
-    # Save the updated data back to the lieferant file
     save_json_data(lieferant_data, f"{lieferant_name}.json")
 
-    # Return the updated data as a response
     return jsonify(lieferant_data)
 
 
@@ -533,24 +516,20 @@ def save_changes_lieferant(lieferant_name):
 @app.route('/lieferant_auftrag/<lieferant_name>')
 def lieferant_auftrag(lieferant_name):
     try:
-        # Load the data for the specified Lieferant
         lieferant_data = load_json_data(f"{lieferant_name}.json")
         lieferant = None
-        lieferanten_data = load_json_data("lieferanten.json")["lieferanten"]  # Load lieferanten data
-        # Find the lieferant with the specified name
+        lieferanten_data = load_json_data("lieferanten.json")["lieferanten"]  
         for item in lieferanten_data:
             if item["name"] == lieferant_name:
                 lieferant = item
                 break
 
         if lieferant:
-            # Pass the data to the template for rendering
             return render_template('lieferant_auftrag.html', lieferant_name=lieferant_name, lieferant_data=lieferant_data, lieferant=lieferant)
         else:
             return "Lieferant not found."
 
     except Exception as e:
-        # Handle any exceptions or errors
         print(f"An error occurred: {str(e)}")
         return "An error occurred while loading data."
 
@@ -558,27 +537,28 @@ def lieferant_auftrag(lieferant_name):
 @app.route('/lieferant_begleitschein/<lieferant_name>')
 def lieferant_begleitschein(lieferant_name):
     try:
-        # Load the data for the specified Lieferant
         lieferant_data = load_json_data(f"{lieferant_name}.json")
         lieferant = None
-        lieferanten_data = load_json_data("lieferanten.json")["lieferanten"]  # Load lieferanten data
-        # Find the lieferant with the specified name
+        lieferanten_data = load_json_data("lieferanten.json")["lieferanten"]  
+
         for item in lieferanten_data:
             if item["name"] == lieferant_name:
                 lieferant = item
                 break
 
         if lieferant:
-            # Pass the data to the template for rendering
             return render_template('lieferant_begleitschein.html', lieferant_name=lieferant_name, lieferant_data=lieferant_data, lieferant=lieferant)
         else:
             return "Lieferant not found."
 
     except Exception as e:
-        # Handle any exceptions or errors
         print(f"An error occurred: {str(e)}")
         return "An error occurred while loading data."
 
+@app.route('/to_defekt', methods=['POST'])
+def to_defekt():
+    elco_nummer = request.form['elco_nummer'] 
+    return render_template('choice_lieferant.html', elco_nummer=elco_nummer)
 
 
 

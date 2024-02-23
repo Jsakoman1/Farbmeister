@@ -8,10 +8,11 @@
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     <title>{{ lieferant_name }} Auftrag</title>
     <style>
+
         .print-button {
-    display: block;
-    /* Other button styles */
-}
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -25,6 +26,7 @@
             <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
 
             <div class="auftrag-buttons-group">
+                <a class="print-button" onclick="redirectToAuftragPage()">Auftrag</a>
                 <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>
             </div>
             <button id="print_button" onclick="printPage()">Print</button>
@@ -116,7 +118,13 @@
     </div>
 </div>
 <script>
-
+    // Function to redirect to lieferant_auftrag page with lieferant_name parameter
+    function redirectToAuftragPage(lieferant_name) {
+        window.location.href = "{{ url_for('lieferant_auftrag', lieferant_name=lieferant_name) }}";
+    }
+</script>
+<script>
+    
     function redirectToBegleitscheinPage(lieferant_name) {
         window.location.href = "{{ url_for('lieferant_begleitschein', lieferant_name=lieferant_name) }}";
     }
@@ -126,5 +134,6 @@
         window.location.href = "{{ url_for('index') }}";
     }
 </script>
+
 </body>
 </html>

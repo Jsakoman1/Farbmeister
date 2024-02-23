@@ -6,7 +6,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     <title>{{ lieferant_name }} Data</title>
-    <!-- Add any CSS or JavaScript links here -->
+    <style>
+
+    .textboxInput {
+        height: 40px;
+        box-sizing: border-box; 
+        resize: none;
+        font-size: 14px;
+        font-weight: bolder;
+        text-align: center;
+        overflow: hidden; 
+        padding: 5px; 
+    }
+    </style>>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -17,9 +29,30 @@
             <a class="print-button" onclick="redirectToAuftragPage()">Auftrag</a>
             <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>        
         </div>
-        <button id="saveChangesButton">Änderungen speichern</button>
-    
-        <h1>{{ lieferant_name }} Data</h1>
+        <button id="saveChangesButton">Text Änderungen speichern</button>
+
+        <h1>Pallete Mengen</h1>
+        <table>
+
+            <tr>
+                <td>Verpackung</td>
+                <td>Lange (cm)</td>
+                <td>Breite (cm)</td>
+                <td>Höhe (cm)</td>          
+                <td>m3</td>
+                <td>Gewicht (kg)</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="verpackung" value="{{ lieferant['verpackung'] }}"></td>
+                <td><input type="text" id="masse_x"  value="{{ lieferant['masse_x'] }}"></td>
+                <td><input type="text" id="masse_y"  value="{{ lieferant['masse_y'] }}"></td>
+                <td><input type="text" id="masse_z"  value="{{ lieferant['masse_z'] }}"></td>
+                <td>{{ lieferant["masse_xyz"] }}</td>
+                <td><input type="text" id="gewicht" value="{{ lieferant['gewicht'] }}"></td>
+            </tr>
+        </table>
+
+        <h1>{{ lieferant_name }} Defekten Rasterwalzen</h1>
         <table border="1" id="lieferantTable">
             <thead>
                 <tr>
@@ -58,12 +91,14 @@
                             <td>{{ item.L_cm }}</td>
                             <td>{{ item.my }}</td>
                             <td>{{ item.cm3 }}</td>
-                            <td contenteditable="true" id="seitl_rand_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'seitl_rand', this.innerText)">{{ item.seitl_rand }}</td>
-                            <td contenteditable="true" id="qual_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'qual', this.innerText)">{{ item.qual }}</td>
-                            <td contenteditable="true" id="schutzring_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'schutzring', this.innerText)">{{ item.schutzring }}</td>
-                            <td contenteditable="true" id="text_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'text', this.innerText)">{{ item.text }}</td>
-                            <td contenteditable="true" id="bemerkung_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'bemerkung', this.innerText)">{{ item.bemerkung }}</td>
-                            <td contenteditable="true" id="datum_{{ item.ELCO_Nummer }}" oninput="handleCellChange('{{ item.ELCO_Nummer }}', 'datum', this.innerText)">{{ item.datum }}</td>
+                            <td><textarea id="seitl_rand_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'seitl_rand', this.value)">{{ item.seitl_rand }}</textarea></td>
+                            <td><textarea id="qual_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'qual', this.value)">{{ item.qual }}</textarea></td>
+                            <td><textarea id="schutzring_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'schutzring', this.value)">{{ item.schutzring }}</textarea></td>
+                            <td><textarea id="text_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'text', this.value)">{{ item.text }}</textarea></td>
+                            <td><textarea id="bemerkung_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'bemerkung', this.value)">{{ item.bemerkung }}</textarea></td>
+                            <td><textarea id="datum_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'datum', this.value)">{{ item.datum }}</textarea></td>
+
+
                         </tr>
                     {% endfor %}
                     {% else %}
@@ -74,6 +109,62 @@
             </tbody>
         </table>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', adjustTextareaFontSize);
+            document.getElementById('userInputBemerkung').addEventListener('input', adjustTextareaFontSize);
+
+            function adjustTextareaFontSize() {
+                var textarea = document.getElementById('userInputBemerkung');
+                var maxHeight = textarea.scrollHeight;
+                var scrollHeight = textarea.clientHeight;
+
+                // Adjust font size based on the scroll height and max height
+                while (scrollHeight < maxHeight && parseInt(getComputedStyle(textarea).fontSize) > 10) {
+                    var fontSize = parseInt(getComputedStyle(textarea).fontSize);
+                    fontSize--;
+                    textarea.style.fontSize = fontSize + 'px';
+                    scrollHeight = textarea.clientHeight;
+                }
+            }
+        </script>
+        
+        <script>
+            document.getElementById('saveChangesButton').addEventListener('click', function() {
+                // Dynamically retrieve the name of the lieferant from the page title
+                var name = document.title.split(' ')[0]; // Split the title by space and get the first part
+                var verpackung = document.getElementById('verpackung').value;
+                var masse_x = document.getElementById('masse_x').value;
+                var masse_y = document.getElementById('masse_y').value;
+                var masse_z = document.getElementById('masse_z').value;
+                var gewicht = document.getElementById('gewicht').value;
+
+                var data = {
+                    "name": name,
+                    "verpackung": verpackung,
+                    "masse_x": masse_x,
+                    "masse_y": masse_y,
+                    "masse_z": masse_z,
+                    "gewicht": gewicht
+                };
+
+                // Send data to Flask route
+                fetch('/save_changes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        </script>
+
     
     
         <script>
