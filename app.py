@@ -1,9 +1,7 @@
 import json
 import os
-import sys
 from datetime import datetime, timedelta
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
-import sys
 
 
 class Rasterwalze:
@@ -181,12 +179,12 @@ app = Flask(__name__)
 
 farbmeister_app = FarbmeisterApp()
 
+
 @app.context_processor
 def inject_lieferanten_data():
     # Load the lieferanten data here
     farbmeister_app.load_lieferanten_data()
     return dict(lieferanten_data=farbmeister_app.lieferanten_data)
-
 
 # Update the index route in your Flask application
 @app.route('/')
@@ -299,6 +297,7 @@ def edit_item(elco_nummer_edit):
     return render_template('edit_item.html', item=item_to_edit)
 
 
+
 @app.route('/pass', methods=['GET', 'POST'])
 def pass_page():
     if request.method == 'POST':
@@ -373,14 +372,11 @@ def show_lieferanten():
 
 @app.route('/lieferanten/add', methods=['GET'])
 def add_lieferant_page():
-    farbmeister_app.load_lieferanten_data()
-    
 
-    return render_template('add_lieferant.html',lieferanten_data=farbmeister_app.lieferanten_data)
+    return render_template('add_lieferant.html')
 
 @app.route('/lieferanten/add', methods=['GET', 'POST'])
 def add_lieferant():
-    farbmeister_app.load_lieferanten_data()
     if request.method == 'POST':
 
         lieferant = {
@@ -401,20 +397,18 @@ def add_lieferant():
         return redirect(url_for('show_lieferanten'))  # Redirect to the show_lieferanten route
     else:
         # If the request method is GET, render the add_lieferant.html template
-        return render_template('add_lieferant.html',lieferanten_data=farbmeister_app.lieferanten_data)
+        return render_template('add_lieferant.html')
 
 
 @app.route('/lieferanten/edit/<string:name>', methods=['GET'])
 def edit_lieferant_page(name):
-    farbmeister_app.load_lieferanten_data()
     # Find the Lieferant based on the name
     lieferant = farbmeister_app.find_lieferant_by_name(name)
-    return render_template('edit_lieferant.html', lieferant=lieferant,lieferanten_data=farbmeister_app.lieferanten_data)
+    return render_template('edit_lieferant.html', lieferant=lieferant)
 
 
 @app.route('/lieferanten/edit/<string:name>', methods=['GET', 'POST'])
 def edit_lieferant(name):
-    farbmeister_app.load_lieferanten_data()
     # Find the Lieferant based on the name
     lieferant = farbmeister_app.find_lieferant_by_name(name)
 
@@ -444,7 +438,7 @@ def edit_lieferant(name):
 
         return redirect(url_for('show_lieferanten'))  # Redirect to the show_lieferanten route
 
-    return render_template('edit_lieferant.html', lieferant=lieferant,lieferanten_data=farbmeister_app.lieferanten_data)
+    return render_template('edit_lieferant.html', lieferant=lieferant)
 
 
 

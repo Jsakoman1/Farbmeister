@@ -15,12 +15,12 @@
     <div class="content">
 
         <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
-        
+
 
         <div class="filter-wrapper">
             <!-- Add label text for the dropdown -->
             <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
-    
+
             <!-- Add a larger and styled dropdown -->
             <select id="filterDropdown" onchange="filterTable()">
                 <option value="all">Alle</option>
@@ -37,7 +37,7 @@
             </select>
          </div>
 
-         
+
 
         <table id="inventoryTable">
             <thead>
@@ -51,25 +51,27 @@
                         <th>{{ lieferant.name }}</th>
                     {% endfor %}
 
+
                     {% if inventar_data %}
                         {% for category in inventar_data[0].__dict__.keys() %}
                             <th>{{ category }}</th>
                         {% endfor %}
                     {% endif %}
 
+
                 </tr>
             </thead>
             <tbody>
-                
+
                 {% for item in inventar_data %}
-                
+
                     <tr>
                         <td>
                             <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item', elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
                                 <button class="delete" type="button" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
                             </form>
                         </td>
-                        
+
                         <td>
                             <form action="{{ url_for('edit_item', elco_nummer_edit=item.ELCO_Nummer) }}" method="GET">
                                 <button class="edit" type="submit">Ändern</button>
@@ -87,7 +89,7 @@
                                 <button class="magnet" type="submit">Magnet</button>
                             </form>
                         </td>
-                       
+
 
                         {% for lieferant in lieferanten_data %}
                             <td>
@@ -95,11 +97,11 @@
                                     <input type="hidden" name="elco_nummer" value="{{ item.ELCO_Nummer }}">
                                     <button class="to-lieferant" type="submit">To {{ lieferant.name }}</button>
                                 </form>
-                                
-                                
+
+
                             </td>
                         {% endfor %}
-                    
+
 
                         {% for value in item.__dict__.values() %}
                             <td>{{ value if value != None else "" }}</td>
@@ -112,21 +114,21 @@
             </tbody>
         </table>
 
-       
-        
-        
+
+
+
     </div>
 
 
-    
+
 <script>
     function filterTable() {
         var filterValue = document.getElementById("filterDropdown").value;
         var rows = document.getElementById("inventoryTable").getElementsByTagName("tr");
-        
+
         for (var i = 0; i < rows.length; i++) {
-            var maschineCell = rows[i].getElementsByTagName("td")[9]; 
-            
+            var maschineCell = rows[i].getElementsByTagName("td")[9];
+
             if (maschineCell) {
                 var maschinen = maschineCell.textContent.trim().split('/');
                 if (filterValue === "all" || maschinen.includes(filterValue)) {

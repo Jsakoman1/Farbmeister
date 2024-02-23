@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Verdana, Tahoma, 'Segoe UI', Geneva, sans-serif;
-    background-color: #2c3e50; 
+    background-color: #2c3e50;
     color: #333;
 }
 
@@ -11,17 +11,15 @@ body {
     margin-right: 30px;
     padding: 30px;
     overflow-y: auto;
-    background-color: snow; 
+    background-color: snow;
     border-radius: 15px;
 }
-
-
 
 .navbar {
     background-color: #2c3e50;
     display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap; 
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     position: fixed;
     width: 100%;
@@ -31,13 +29,13 @@ body {
     display: flex;
     align-items: center;
     height: auto;
-    padding: 10px 20px; 
+    padding: 10px 20px;
 
 }
 
 
 .navbar-logo {
-    width:100px; 
+    width:100px;
     max-width: 140px;
 
 }
@@ -51,13 +49,13 @@ body {
 .nav-buttons {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     flex-grow: 1;
 
 }
 
 .nav-buttons a {
-    text-decoration: none; 
+    text-decoration: none;
     margin: 4px;
 }
 
@@ -80,16 +78,16 @@ body {
 
 .action-button:hover,
 .action-button.active {
-    background-color: #2980b9; 
-    border-bottom: 6px solid #f39c12; 
-    transform: scale(1.05); 
+    background-color: #2980b9;
+    border-bottom: 6px solid #f39c12;
+    transform: scale(1.05);
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
-    border: 1px solid darkgray; 
+    border: 1px solid darkgray;
 }
 
 th, td {
@@ -107,7 +105,7 @@ th {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f2f2f2; 
+    background-color: #f2f2f2;
 }
 
 tbody tr:hover {
@@ -115,7 +113,7 @@ tbody tr:hover {
 }
 
 form {
-    
+
     display: flex;
     flex-direction: column;
     max-width: 100%;
@@ -130,7 +128,7 @@ input {
     padding: 8px;
     box-sizing: border-box;
     font-size: 10px;
-    width: 100%; 
+    width: 100%;
 }
 
 button.delete, button.edit, button.pass, button.magnet, button.to-lieferant {
@@ -167,7 +165,7 @@ button.to-lieferant{
 
 button.delete:hover, button.edit:hover, button.pass:hover, button.magnet:hover, button.to-lieferant:hover {
     background-color: #2c3e50;
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 
@@ -183,11 +181,11 @@ input[type="text"] {
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #2ecc71; 
+    border-color: #2ecc71;
 }
 
 input[type="text"]:hover {
-    background-color: #cccccc; 
+    background-color: #cccccc;
 }
 
 
@@ -199,7 +197,7 @@ input[type="text"]::placeholder {
 
 .add-item-button {
     width: 150px;
-    padding: 15px 50px; 
+    padding: 15px 50px;
     margin-top: 30px;
     font-size: 14px;
     background-color: darkblue;
@@ -213,12 +211,12 @@ input[type="text"]::placeholder {
 
 
 .add-item-button:hover {
-    background-color: rgb(4, 4, 101); 
-    transform: scale(1.05); 
+    background-color: rgb(4, 4, 101);
+    transform: scale(1.05);
 }
 
 td[contenteditable="true"].hovered-cell {
-    background-color: #cccccc; 
+    background-color: #cccccc;
 }
 
 td[contenteditable="true"] {
@@ -251,8 +249,8 @@ td[contenteditable="true"] {
 }
 
 .print-button:hover {
-    background-color: #2c3e50; 
-    transform: scale(1.05); 
+    background-color: #2c3e50;
+    transform: scale(1.05);
 }
 
 
@@ -265,7 +263,7 @@ td[contenteditable="true"] {
     text-align: center;
     text-decoration: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    display: block; 
+    display: block;
     font-size: 10px;
     cursor: pointer;
     border-radius: 8px;
@@ -275,8 +273,8 @@ td[contenteditable="true"] {
 }
 
 .back-button:hover {
-    background-color: #2c3e50; 
-    transform: scale(1.05); 
+    background-color: #2c3e50;
+    transform: scale(1.05);
 }
 
 .add-new-item-button {
@@ -286,17 +284,17 @@ td[contenteditable="true"] {
     font-size: 16px;
     background-color: #2c3e50;
     color: white;
-    border: none; 
+    border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-decoration: none; 
+    text-decoration: none;
 
 }
 
 .add-new-item-button:hover {
-    background-color: #f39c12; 
-    transform: scale(1.05); 
+    background-color: #f39c12;
+    transform: scale(1.05);
 }
 
 .filter-wrapper {
@@ -307,24 +305,24 @@ td[contenteditable="true"] {
 }
 
 #filterDropdown {
-    padding: 10px; 
+    padding: 10px;
     font-size: 16px;
-    width: 250px; 
+    width: 250px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
 .dropdown-label {
-    font-size: 18px; 
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     width: 150px;
 }
 
 #saveChangesButton {
-    background-color: #2c3e50; 
+    background-color: #2c3e50;
     border: none;
-    color: white; 
+    color: white;
     padding: 10px 10px;
     font-size: 12px;
     border-radius: 8px;
@@ -332,12 +330,12 @@ td[contenteditable="true"] {
     transition: background-color 0.3s;
     text-decoration: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    display: block; 
+    display: block;
 }
 
 #saveChangesButton:hover {
-    background-color: #2c3e50; 
-    transform: scale(1.05); 
+    background-color: #2c3e50;
+    transform: scale(1.05);
 }
 
 .lieferant-box {
@@ -395,9 +393,6 @@ button.lieferant-edit:hover {
     margin-top: 0;
     margin-bottom: 50px;
 }
-
-
-
 
 @media (max-width: 900px) {
     .navbar-title,

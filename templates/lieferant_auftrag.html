@@ -23,9 +23,9 @@
         <div class="container">
         <div id="not-printable">
             <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
-            
+
             <div class="auftrag-buttons-group">
-                <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>  
+                <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>
             </div>
             <button id="print_button" onclick="printPage()">Print</button>
         </div>
@@ -101,11 +101,9 @@
                     <td>{{ lieferant["masse_y"] }}</td>
                     <td colspan="2">{{ lieferant["masse_z"] }}</td>
                     <td class="empty-cell"></td>
-                    {% if lieferant_masse_x and lieferant_masse_y and lieferant_masse_z %}
-                        <td>{{ lieferant["masse_xyz"] }}</td>
-                    {% else %}
-                        <td>N/A</td>
-                    {% endif %}
+
+                    <td>{{ lieferant["masse_xyz"] }}</td>
+
                     <td class="empty-cell"></td>
                     <td>{{ lieferant["gewicht"] }}</td>
                 </tr>
@@ -118,7 +116,7 @@
     </div>
 </div>
 <script>
-            
+
     function redirectToBegleitscheinPage(lieferant_name) {
         window.location.href = "{{ url_for('lieferant_begleitschein', lieferant_name=lieferant_name) }}";
     }

@@ -12,29 +12,28 @@
 
     <div class="content">
         <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
-    <h1>Edit Lieferant</h1>
+        <h1>Edit Lieferant</h1>
 
-    <form action="/lieferanten/edit/{{ lieferant.name }}" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ lieferant.name }}" required><br>
+        <form action="/lieferanten/edit/{{ lieferant.name }}" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ lieferant.name }}" required><br>
 
-        <label for="adresse">Adresse:</label>
-        <input type="text" id="adresse" name="adresse" value="{{ lieferant.adresse }}"><br>
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresse" name="adresse" value="{{ lieferant.adresse }}"><br>
 
-        <label for="note">Note:</label>
-        <input type="text" id="note" name="note" value="{{ lieferant.note }}"><br>
+            <label for="note">Note:</label>
+            <input type="text" id="note" name="note" value="{{ lieferant.note }}"><br>
 
-        <label for="kontakt">Kontakt:</label>
-        <input type="text" id="kontakt" name="kontakt" value="{{ lieferant.kontakt }}"><br>
+            <label for="kontakt">Kontakt:</label>
+            <input type="text" id="kontakt" name="kontakt" value="{{ lieferant.kontakt }}"><br>
 
-        <label for="b_kontakt">Begleitschein Kontakt:</label>
-        <input type="text" id="b_kontakt" name="b_kontakt" value="{{ lieferant.b_kontakt }}"><br>
+            <label for="b_kontakt">Begleitschein Kontakt:</label>
+            <input type="text" id="b_kontakt" name="b_kontakt" value="{{ lieferant.b_kontakt }}"><br>
 
-        <button class="add-item-button" type="submit">Speichern</button>
-
-    </form>
+            <button class="add-item-button" type="submit">Speichern</button>
+        </form>
     </div>
-    <script>
+        <script>
         function redirectToIndexPage() {
             window.location.href = "{{ url_for('index') }}";
         }
