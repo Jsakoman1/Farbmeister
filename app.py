@@ -284,6 +284,34 @@ def edit_item(elco_nummer_edit):
 
 
 
+@app.route('/save_changes_wo', methods=['POST'])
+def save_changes_wo():
+    data = request.json
+
+    # Load the data from the inventar.json file
+    with open('inventar.json', 'r') as file:
+        inventar_data = json.load(file)
+
+    for change in data:
+        elco_num = change['elcoNum']
+        field = change['field']
+        value = change['value']
+
+        # Update the value in inventar_data
+        for item in inventar_data:
+            if item['ELCO_Nummer'] == elco_num:
+                item[field] = value
+                break
+
+    # Save the updated data back to the inventar.json file
+    with open('inventar.json', 'w') as file:
+        json.dump(inventar_data, file, indent=2)
+
+    # Return a response indicating success
+    return jsonify({'message': 'Changes saved successfully'})
+
+
+
 
 
 @app.route('/pass', methods=['GET', 'POST'])

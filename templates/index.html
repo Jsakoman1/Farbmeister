@@ -44,7 +44,7 @@
             </select>
          </div>
 
-
+        <button id="saveChangesButton">Text Änderungen speichern</button>
 
         <table id="inventoryTable">
             <thead>
@@ -55,7 +55,11 @@
                     
                     {% if inventar_data %}
                         {% for category in inventar_data[0].__dict__.keys() %}
-                            <th>{{ category }}</th>
+                            {% if category == "wo" %}
+                                <th>{{ category }}</th>
+                            {% else %}
+                                <th>{{ category }}</th>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
 
@@ -89,8 +93,18 @@
                         </td>
                         
 
-                        {% for value in item.__dict__.values() %}
-                            <td class="max-width-cell">{{ value if value != None else "" }}</td>
+                        {% for category, value in item.__dict__.items() %}
+                            {% if category == "wo" %}
+                                <td class="max-width-cell">
+                                    <textarea style="background-color: transparent; border: none;font-size: 14px; font-weight: bolder;text-align: center;" rows="2" cols="10" id="wo_{{ item.ELCO_Nummer }}" onchange="handleCellChange_wo('{{ item.ELCO_Nummer }}', this.value)">{{ value if value != None else "" }}</textarea>
+                                </td>
+                                {% elif category == "erneuert" %}
+                                    <td class="max-width-cell">
+                                        <textarea style="background-color: transparent; border: none;font-size: 14px; font-weight: bolder;text-align: center;" rows="2" cols="10" id="erneuert_{{ item.ELCO_Nummer }}" onchange="handleCellChange_erneuert('{{ item.ELCO_Nummer }}', this.value)">{{ value if value != None else "" }}</textarea>
+                                    </td>
+                                {% else %}
+                                    <td class="max-width-cell">{{ value if value != None else "" }}</td>
+                            {% endif %}
                         {% endfor %}
 
                         <td>
@@ -202,19 +216,7 @@
                 }
             }
         }
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName("td");
-
-            for (var j = 0; j < cells.length; j++) {
-                cells[j].addEventListener("mouseenter", function() {
-
-                    this.parentNode.style.backgroundColor = "#cccccc";
-                });
-                cells[j].addEventListener("mouseleave", function() {
-                    this.parentNode.style.backgroundColor = "";
-                });
-            }
-        }
+        
     }
     
     function styleCellsInColumnWithTablarText() {
@@ -278,6 +280,49 @@
 </script>
 
 
+<script>
+    // Define a variable to store pending changes
+    let pendingChanges = [];
+
+    // Function to handle cell changes and store pending changes
+    function handleCellChange_wo(elcoNum, value) {
+        pendingChanges.push({ elcoNum: elcoNum, field: 'wo', value: value });
+    }
+
+    // Function to handle cell changes for "erneuert" field and store pending changes
+    function handleCellChange_erneuert(elcoNum, value) {
+        pendingChanges.push({ elcoNum: elcoNum, field: 'erneuert', value: value });
+    }
+
+    // Function to save pending changes
+    function saveChanges_wo() {
+        // Send an AJAX POST request to save the pending changes
+        fetch('/save_changes_wo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pendingChanges),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response if needed
+            console.log(data);
+            // Clear pendingChanges array after saving
+            pendingChanges = [];
+            location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Add event listener to the "Save Changes" button
+    document.getElementById('saveChangesButton').addEventListener('click', function() {
+        saveChanges_wo();
+
+    });
+</script>
 
 
 
