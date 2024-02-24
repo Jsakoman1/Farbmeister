@@ -143,6 +143,7 @@
     window.onload = function() {
         styleCellsInColumnWithNeuText();
         styleCellsInColumnWithTablarText();
+        styleCellsInColumnWithSpecialHeaders();
     }
 
     function styleCellsInColumnWithNeuText() {
@@ -155,7 +156,7 @@
             if (headerCells[i].textContent.trim() === "int_ausgang") {
                 columnIndexIntAusgang = i;
                 break;
-            }
+                }
         }
 
         // Apply styling to cells containing the text "neu" in the identified column
@@ -174,65 +175,110 @@
         }
     }
 
-    
-    function styleCellsInColumnWithTablarText() {
-    var table = document.getElementById("inventoryTable");
-    var headerCells = table.getElementsByTagName("th");
-    var columnIndexWo = -1;
-
-    // Find the index of the column with header text "wo"
-    for (var i = 0; i < headerCells.length; i++) {
-        if (headerCells[i].textContent.trim() === "wo") {
-            columnIndexWo = i;
-            break;
-        }
-    }
-
-    // Apply styling to cells containing the text "Tablar" in the identified column
-    if (columnIndexWo !== -1) {
-    var rows = table.getElementsByTagName("tr");
-
-    for (var i = 0; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
-
-        if (cells.length > columnIndexWo) {
-            var cellText = cells[columnIndexWo].textContent.trim().toLowerCase(); // Convert to lowercase for case-insensitive comparison
-
-            // Check if the cell text includes "Tablar" or "Lager" (ignoring whitespace)
-            if (cellText.replace(/\s/g, '').includes("tablar") || cellText.replace(/\s/g, '').includes("lager")) {
-                cells[columnIndexWo].style.backgroundColor = "#98FB98"; // Pastel green
-            }
-        }
-    }
-}
-
-
-
-    // List of machine names (you need to replace this with your actual machine names)
-    var machineNames = ["249", "202", "Ordo", "627", "EU", "GS", "241", "341", "381", "627", "326", "ORDO"];
-
-    // Apply styling to cells containing machine names in the identified column
-    if (columnIndexWo !== -1) {
+    function styleCellsInColumnWithSpecialHeaders() {
+        var table = document.getElementById("inventoryTable");
         var rows = table.getElementsByTagName("tr");
+        var headerCells = table.getElementsByTagName("th");
+        var specialColumnHeaders = ["ELCO_Nummer"];
 
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName("td");
-            if (cells.length > columnIndexWo) {
-                var cellText = cells[columnIndexWo].textContent.trim().toLowerCase();
 
-                // Check if the cell text includes any of the machine names
-                for (var j = 0; j < machineNames.length; j++) {
-                    // Check if the machine name is found in the cell text, ignoring whitespace
-                    if (cellText.includes(machineNames[j].toLowerCase().replace(/\s/g, ''))) {
-                        cells[columnIndexWo].style.backgroundColor = "skyblue"; // Pastel red
-                        break; // Exit the loop once a machine name is found
+        for (var h = 0; h < specialColumnHeaders.length; h++) {
+            var columnIndex = -1;
+
+            for (var i = 0; i < headerCells.length; i++) {
+                if (headerCells[i].textContent.trim() === specialColumnHeaders[h]) {
+                    columnIndex = i;
+                    break;
+                }
+            }
+
+            if (columnIndex !== -1) {
+                var rows = table.getElementsByTagName("tr");
+                for (var j = 0; j < rows.length; j++) {
+                    var cells = rows[j].getElementsByTagName("td");
+                    if (cells.length > columnIndex) {
+                        cells[columnIndex].style.fontWeight = "bolder"; 
                     }
                 }
             }
         }
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+
+            for (var j = 0; j < cells.length; j++) {
+                cells[j].addEventListener("mouseenter", function() {
+
+                    this.parentNode.style.backgroundColor = "#cccccc";
+                });
+                cells[j].addEventListener("mouseleave", function() {
+                    this.parentNode.style.backgroundColor = "";
+                });
+            }
+        }
     }
-}
+    
+    function styleCellsInColumnWithTablarText() {
+        var table = document.getElementById("inventoryTable");
+        var headerCells = table.getElementsByTagName("th");
+        var columnIndexWo = -1;
+
+        for (var i = 0; i < headerCells.length; i++) {
+            if (headerCells[i].textContent.trim() === "wo") {
+                columnIndexWo = i;
+                break;
+            }
+        }
+
+        if (columnIndexWo !== -1) {
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+
+                if (cells.length > columnIndexWo) {
+                    var cellText = cells[columnIndexWo].textContent.trim().toLowerCase();
+
+                    if (cellText.replace(/\s/g, '').includes("tablar") || cellText.replace(/\s/g, '').includes("lager")) {
+                        cells[columnIndexWo].style.backgroundColor = "#98FB98"; 
+                    }
+                }
+            }
+        }
+
+        var machineNames = ["249", "202", "Ordo", "627", "EU", "GS", "241", "341", "381", "627", "326", "ORDO"];
+        var lieferantenNames = ["apex","tls","zecher","cheshire"];
+
+        if (columnIndexWo !== -1) {
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+                if (cells.length > columnIndexWo) {
+                    var cellText = cells[columnIndexWo].textContent.trim().toLowerCase();
+
+                    for (var j = 0; j < machineNames.length; j++) {
+                        if (cellText.includes(machineNames[j].toLowerCase().replace(/\s/g, ''))) {
+                            cells[columnIndexWo].style.backgroundColor = "skyblue"; 
+                            break;
+                        }
+
+                    }
+                    for (var j = 0; j < lieferantenNames.length; j++) {
+                        if (cellText.includes(lieferantenNames[j].toLowerCase().replace(/\s/g, ''))) {
+                                cells[columnIndexWo].style.backgroundColor = "#E9967A";
+                                break;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 </script>
+
+
+
 
 
 

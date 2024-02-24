@@ -140,6 +140,8 @@ button.delete, button.edit, button.pass, button.magnet, button.to-defekt {
     margin: 0px 2px;
     width: 100%;
     color: white;
+    outline: 1px solid black;
+    text-shadow: 0px 0px 1px black;
 }
 
 button.delete {
@@ -151,15 +153,15 @@ button.edit {
 }
 
 button.pass {
-    background-color: goldenrod;
+    background-color: blue;
 }
 
 button.magnet {
-    background-color: #e74c3c;
+    background-color: goldenrod;
 }
 
 button.to-defekt {
-    background-color: purple;
+    background-color: #e74c3c;
 }
 
 button.delete:hover, button.edit:hover, button.pass:hover, button.magnet:hover, button.to-defekt:hover {
@@ -195,23 +197,25 @@ input[type="text"]::placeholder {
 
 .add-item-button {
     width: 150px;
-    padding: 15px 50px;
+    padding: 0; /* Remove padding */
     margin-top: 30px;
     font-size: 14px;
-    background-color: darkblue;
+    background-color: #2c3e50;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     display: block;
     margin: 0 auto; /* Centers horizontally */
+    text-align: center; /* Centers text horizontally */
+    line-height: 50px; /* Adjust line-height to match the button height */
 }
-
 
 .add-item-button:hover {
-    background-color: rgb(4, 4, 101);
+    background-color: #2c3e50;;
     transform: scale(1.05);
 }
+
 
 
 
@@ -379,7 +383,7 @@ button.lieferant-edit:hover {
 .pagetitle {
     text-align: center;
     font-size: 2.5rem;
-    color: #f39c12;
+    color: #2c3e50;
     margin-top: 0;
     margin-bottom: 50px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);

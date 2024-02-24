@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Item</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
 <body>
 
@@ -12,66 +13,65 @@
 
 
     <div class="content">
-    <h1>Ändern</h1>
+    <h1 class="pagetitle">Rasterwalze Data Ändern</h1>
 
     <form id="editForm" action="{{ url_for('edit_item', elco_nummer_edit=item['ELCO_Nummer']) }}" method="POST">
-
-        <label for="elco_nummer">ELCO Nummer:</label>
-        <input type="text" id="elco_nummer" name="elco_nummer" requiered value="{{ item['ELCO_Nummer'] }}" placeholder="ELCO Nummer"><br>
+        <button class="add-item-button" type="submit">SPREICHERN</button>
+        <table>
+            <tr>
+                <td><label for="elco_nummer">ELCO Nummer:</label></td>
+                <td><input type="text" id="elco_nummer" name="elco_nummer" required value="{{ item['ELCO_Nummer'] }}" placeholder="ELCO Nummer"></td>
+            </tr>
+            <tr>
+                <td><label for="maschine">Maschine:</label></td>
+                <td><input type="text" id="maschine" name="maschine" value="{{ item['Maschine'] }}" placeholder="Maschine"></td>
+            </tr>
+            <tr>
+                <td><label for="mass">Mass:</label></td>
+                <td><input type="text" id="mass" name="mass" value="{{ item['Mass'] }}" placeholder="Mass"></td>
+            </tr>
+            <tr>
+                <td><label for="produktion_nummer">Produktion Nummer:</label></td>
+                <td><input type="text" id="produktion_nummer" name="produktion_nummer" value="{{ item['Produktion_Nummer'] }}" placeholder="Produktion Nummer"></td>
+            </tr>
+            <tr>
+                <td><label for="l_cm">L cm:</label></td>
+                <td><input type="text" id="l_cm" name="l_cm" value="{{ item['L_cm'] }}" placeholder="L cm"></td>
+            </tr>
+            <tr>
+                <td><label for="my">My:</label></td>
+                <td><input type="text" id="my" name="my" value="{{ item['my'] }}" placeholder="My"></td>
+            </tr>
+            <tr>
+                <td><label for="cm3">Cm3:</label></td>
+                <td><input type="text" id="cm3" name="cm3" value="{{ item['cm3'] }}" placeholder="Cm3"></td>
+            </tr>
+            <tr>
+                <td><label for="wo">Wo:</label></td>
+                <td><input type="text" id="wo" name="wo" value="{{ item['wo'] }}" placeholder="Wo"></td>
+            </tr>
+            <tr>
+                <td><label for="erneuert">Erneuert:</label></td>
+                <td><input type="text" id="erneuert" name="erneuert" value="{{ item['erneuert'] }}" placeholder="Erneuert"></td>
+            </tr>
+            <tr>
+                <td><label for="int_ausgang">Int Ausgang:</label></td>
+                <td><input type="text" id="int_ausgang" name="int_ausgang" value="{{ item['int_ausgang'] }}" placeholder="Int Ausgang"></td>
+            </tr>
+            <tr>
+                <td><label for="bemerkung">Bemerkung:</label></td>
+                <td><input type="text" id="bemerkung" name="bemerkung" value="{{ item['bemerkung'] }}" placeholder="Bemerkung"></td>
+            </tr>
+            <tr>
+                <td><label for="prod_nr_2">Prod Nr 2:</label></td>
+                <td><input type="text" id="prod_nr_2" name="prod_nr_2" value="{{ item['prod_nr_2'] }}" placeholder="Prod Nr 2"></td>
+            </tr>
+            <tr>
+                <td><label for="alte_nummer">Alte Nummer:</label></td>
+                <td><input type="text" id="alte_nummer" name="alte_nummer" value="{{ item['alte_nummer'] }}" placeholder="Alte Nummer"></td>
+            </tr>
+        </table>
         
-            <label for="maschine">Maschine:</label>
-            <input type="text" id="maschine" name="maschine" value="{{ item['Maschine'] }}" placeholder="Maschine"><br>
-        
-            <label for="mass">Mass:</label>
-            <input type="text" id="mass" name="mass" value="{{ item['Mass'] }}" placeholder="Mass"><br>
-        
-            <label for="produktion_nummer">Produktion Nummer:</label>
-            <input type="text" id="produktion_nummer" name="produktion_nummer" value="{{ item['Produktion_Nummer'] }}" placeholder="Produktion Nummer"><br>
-        
-            <label for="l_cm">L cm:</label>
-            <input type="text" id="l_cm" name="l_cm" value="{{ item['L_cm'] }}" placeholder="L cm"><br>
-        
-            <label for="my">My:</label>
-            <input type="text" id="my" name="my" value="{{ item['my'] }}" placeholder="My"><br>
-        
-            <label for="cm3">Cm3:</label>
-            <input type="text" id="cm3" name="cm3" value="{{ item['cm3'] }}" placeholder="Cm3"><br>
-        
-            <label for="wo">Wo:</label>
-            <input type="text" id="wo" name="wo" value="{{ item['wo'] }}" placeholder="Wo"><br>
-        
-            <label for="erneuert">Erneuert:</label>
-            <input type="text" id="erneuert" name="erneuert" value="{{ item['erneuert'] }}" placeholder="Erneuert"><br>
-        
-            <label for="int_ausgang">Int Ausgang:</label>
-            <input type="text" id="int_ausgang" name="int_ausgang" value="{{ item['int_ausgang'] }}" placeholder="Int Ausgang"><br>
-        
-            <label for="int_eingang">Int Eingang:</label>
-            <input type="text" id="int_eingang" name="int_eingang" value="{{ item['int_eingang'] }}" placeholder="Int Eingang"><br>
-        
-            <label for="bemerkung">Bemerkung:</label>
-            <input type="text" id="bemerkung" name="bemerkung" value="{{ item['bemerkung'] }}" placeholder="Bemerkung"><br>
-        
-            <label for="prod_nr_2">Prod Nr 2:</label>
-            <input type="text" id="prod_nr_2" name="prod_nr_2" value="{{ item['prod_nr_2'] }}" placeholder="Prod Nr 2"><br>
-        
-            <label for="alte_nummer">Alte Nummer:</label>
-            <input type="text" id="alte_nummer" name="alte_nummer" value="{{ item['alte_nummer'] }}" placeholder="Alte Nummer"><br>
-        
-            <label for="Cheshire">Cheshire:</label>
-            <input type="text" id="Cheshire" name="Cheshire" value="{{ item['Cheshire'] }}" placeholder="Cheshire"><br>
-        
-            <label for="Apex">Apex:</label>
-            <input type="text" id="Apex" name="Apex" value="{{ item['Apex'] }}" placeholder="Apex"><br>
-        
-            <label for="Praxair">Praxair:</label>
-            <input type="text" id="Praxair" name="Praxair" value="{{ item['Praxair'] }}" placeholder="Praxair"><br>
-        
-            <label for="Ersetzt">Ersetzt:</label>
-            <input type="text" id="Ersetzt" name="Ersetzt" value="{{ item['Ersetzt'] }}" placeholder="Ersetzt"><br>
-
-        
-        <button class="add-item-button" type="submit">Ändern</button>
     </form>
 </div>
 <script>

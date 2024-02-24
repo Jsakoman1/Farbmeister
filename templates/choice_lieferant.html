@@ -33,6 +33,14 @@
             transform: scale(1.1);
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
+        .pagetitle {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -40,7 +48,10 @@
 
     <div class="content">
         <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
-        <h1>Wählen Sie Ihren Lieferanten für Rasterwalzen: {{ elco_nummer }}</h1>
+
+        <h1 class="pagetitle">Wählen Sie Ihren Lieferanten für Rasterwalzen:</h1>
+        <h1 class="pagetitle">{{ elco_nummer }}</h1>
+        
         <div class="button-container" id="button-container">
             {% for lieferant in lieferanten_data %}
                 <form action="{{ url_for('to_lieferant', lieferant_name=lieferant.name) }}" method="post">
