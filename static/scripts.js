@@ -13,7 +13,7 @@ function printPage() {
 
 
 function confirmDelete(item_id) {
-    if (confirm("Are you sure you want to delete this item?")) {
+    if (confirm("Sind Sie sicher, dass Sie dieses Element löschen möchten?")) {
         document.getElementById("deleteForm_" + item_id).submit();
     }
 }

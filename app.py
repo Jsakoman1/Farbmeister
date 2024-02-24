@@ -289,8 +289,10 @@ def save_changes_wo():
     data = request.json
 
     # Load the data from the inventar.json file
-    with open('inventar.json', 'r') as file:
-        inventar_data = json.load(file)
+    inventar_data = load_json_data('inventar.json')
+
+    if inventar_data is None:
+        return jsonify({'message': 'Failed to load inventar data'})
 
     for change in data:
         elco_num = change['elcoNum']
@@ -303,14 +305,11 @@ def save_changes_wo():
                 item[field] = value
                 break
 
-    # Save the updated data back to the inventar.json file
-    with open('inventar.json', 'w') as file:
-        json.dump(inventar_data, file, indent=2)
+    # Save the updated data back to the inventar.json file using the absolute path
+    save_json_data(inventar_data, 'inventar.json')
 
     # Return a response indicating success
     return jsonify({'message': 'Changes saved successfully'})
-
-
 
 
 
@@ -469,6 +468,7 @@ def delete_item_lieferant(lieferant_name, elco_nummer_delete):
 
 @app.route('/to_lieferant/<lieferant_name>', methods=['POST'])
 def to_lieferant(lieferant_name):
+    import datetime
     if request.method == 'POST':
         elco_nummer = request.form.get('elco_nummer')  
         lieferant_data = load_json_data(f"{lieferant_name}.json")
@@ -494,6 +494,19 @@ def to_lieferant(lieferant_name):
                 "datum": ""
             })
             save_json_data(lieferant_data, f"{lieferant_name}.json")
+
+            current_date = datetime.datetime.now().strftime('%d.%m.%Y')
+
+             # Update the 'wo' key in the inventory.json for the item
+            for item in farbmeister_app.inventar_data:
+                if item.ELCO_Nummer == elco_nummer:
+                    item.wo = lieferant_name
+                    item.erneuert = current_date
+                    break
+            
+            farbmeister_app.save_inventar()
+
+            
 
     return redirect(url_for('lieferant_page', lieferant_name=lieferant_name))
 

@@ -12,6 +12,8 @@
             word-wrap: break-word;
             white-space: normal;
         }
+
+
     </style>
 </head>
 <body>
@@ -19,19 +21,14 @@
     {% include 'navbar.html' %}
 
     <div class="content">
-        <h1 class="pagetitle">INVENTAR</h1>
-
-        <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
-
 
         <div class="filter-wrapper">
-            <!-- Add label text for the dropdown -->
+
             <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
 
-            <!-- Add a larger and styled dropdown -->
+
             <select id="filterDropdown" onchange="filterTable()">
                 <option value="all">Alle</option>
-                <!-- Add options for unique values of Maschine attribute -->
                 {% set maschinen = [] %}
                 {% for item in inventar_data %}
                     {% for maschine in item.Maschine.split('/') %}
@@ -44,8 +41,12 @@
             </select>
          </div>
 
-        <button id="saveChangesButton">Text Änderungen speichern</button>
+        <div class="buttons-group-spread">
+            <button id="saveChangesButton">Änderungen speichern</button>
+            <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
+        </div>
 
+        <div class="table-container">
         <table id="inventoryTable">
             <thead>
                 <tr>
@@ -125,6 +126,7 @@
 
             </tbody>
         </table>
+        </div>
 
 
 
@@ -181,7 +183,7 @@
                 var cells = rows[i].getElementsByTagName("td");
 
                 if (cells.length > columnIndexIntAusgang && cells[columnIndexIntAusgang].textContent.trim() === "neu") {
-                    cells[columnIndexIntAusgang].style.color = "purple";
+                    cells[columnIndexIntAusgang].style.color = "red";
                     cells[columnIndexIntAusgang].style.fontWeight = "bold";
                     cells[columnIndexIntAusgang].style.fontSize = "16px";
                 }
@@ -287,11 +289,13 @@
     // Function to handle cell changes and store pending changes
     function handleCellChange_wo(elcoNum, value) {
         pendingChanges.push({ elcoNum: elcoNum, field: 'wo', value: value });
+        document.getElementById('saveChangesButton').style.backgroundColor = 'goldenrod';
     }
 
     // Function to handle cell changes for "erneuert" field and store pending changes
     function handleCellChange_erneuert(elcoNum, value) {
         pendingChanges.push({ elcoNum: elcoNum, field: 'erneuert', value: value });
+        document.getElementById('saveChangesButton').style.backgroundColor = 'goldenrod';
     }
 
     // Function to save pending changes
