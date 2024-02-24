@@ -175,6 +175,39 @@ app = Flask(__name__)
 
 farbmeister_app = FarbmeisterApp()
 
+app.secret_key = 'your_secret_key'  # Set a secret key for session security
+
+correct_username = "Farbmeister"
+correct_password = "ElcoAG"
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Retrieve the username and password from the form
+        username = request.form['username']
+        password = request.form['password']
+
+        # Check if the provided username and password match the predefined values
+        if username == correct_username and password == correct_password:
+            # Store user information in session
+            session['username'] = username
+            # Redirect to the index page upon successful login
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', error_message="Falscher Benutzername oder Passwort")
+
+    # Serve the login page if the request method is GET
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    # Remove the username from the session if it exists
+    session.pop('username', None)
+    # Redirect to the login page after logout
+    return redirect(url_for('login'))
+
+
 
 @app.context_processor
 def inject_lieferanten_data():
@@ -185,15 +218,14 @@ def inject_lieferanten_data():
 # Update the index route in your Flask application
 @app.route('/')
 def index():
-    farbmeister_app.load_lieferanten_data()
-    farbmeister_app.load_and_sort_inventar()
+    if 'username' in session:
+        farbmeister_app.load_lieferanten_data()
+        farbmeister_app.load_and_sort_inventar()
+        return render_template('index.html', inventar_data=farbmeister_app.inventar_data,
+                            lieferanten_data=farbmeister_app.lieferanten_data)
 
-
-
-    # Pass the inventory data, lieferanten data, and the number of rows to the template
-    return render_template('index.html', inventar_data=farbmeister_app.inventar_data,
-                           lieferanten_data=farbmeister_app.lieferanten_data)
-
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/memo')
 def memo():

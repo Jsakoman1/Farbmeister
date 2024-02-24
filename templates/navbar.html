@@ -15,6 +15,9 @@
         {% endfor %}
         <a href="/memo"><button class="action-button">MEMO</button></a>
         <a href="/lieferanten"><button class="action-button">Einstellungen</button></a>
+        {% if session['username'] %}
+        <a href="/logout"><button class="action-button">LOGOUT</button></a>
+        {% endif %}
     </div>
 </div>
 
