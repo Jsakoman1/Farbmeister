@@ -29,8 +29,9 @@ th, td {
     {% include 'navbar.html' %}
 
     <div class="content">
-        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
-
+        <div class="toolbar-lieferant">
+            <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+        </div>
         <h1 class="pagetitle">Einstellungen</h1>
 
         <a href="{{ url_for('add_lieferant_page') }}" class="add-new-item-button">Neuer Lieferant erstellen</a>

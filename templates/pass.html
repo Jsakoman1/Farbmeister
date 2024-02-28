@@ -17,7 +17,10 @@
     
     <div class="content">
         <div id="not-printable">
-            <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+            <div class="toolbar-lieferant">
+                <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+                <button class="print-button" onclick="printPage()">Print</button>
+            </div>
         </div>
 
     <div id="printable">
@@ -70,9 +73,7 @@
             </tbody>
         </table>
     </div>
-    <div id="not-printable">
-        <button class="print_button" onclick="printPage()">Print</button>
-    </div>
+
     <script>
         function printPage() {
             window.print();

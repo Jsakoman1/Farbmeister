@@ -215,7 +215,7 @@ def inject_lieferanten_data():
     farbmeister_app.load_lieferanten_data()
     return dict(lieferanten_data=farbmeister_app.lieferanten_data)
 
-# Update the index route in your Flask application
+
 @app.route('/')
 def index():
     if 'username' in session:
@@ -313,35 +313,6 @@ def edit_item(elco_nummer_edit):
         return redirect(url_for('index'))
 
     return render_template('edit_item.html', item=item_to_edit)
-
-
-
-@app.route('/save_changes_wo', methods=['POST'])
-def save_changes_wo():
-    data = request.json
-
-    # Load the data from the inventar.json file
-    inventar_data = load_json_data('inventar.json')
-
-    if inventar_data is None:
-        return jsonify({'message': 'Failed to load inventar data'})
-
-    for change in data:
-        elco_num = change['elcoNum']
-        field = change['field']
-        value = change['value']
-
-        # Update the value in inventar_data
-        for item in inventar_data:
-            if item['ELCO_Nummer'] == elco_num:
-                item[field] = value
-                break
-
-    # Save the updated data back to the inventar.json file using the absolute path
-    save_json_data(inventar_data, 'inventar.json')
-
-    # Return a response indicating success
-    return jsonify({'message': 'Changes saved successfully'})
 
 
 
@@ -500,7 +471,6 @@ def delete_item_lieferant(lieferant_name, elco_nummer_delete):
 
 @app.route('/to_lieferant/<lieferant_name>', methods=['POST'])
 def to_lieferant(lieferant_name):
-    import datetime
     if request.method == 'POST':
         elco_nummer = request.form.get('elco_nummer')  
         lieferant_data = load_json_data(f"{lieferant_name}.json")
@@ -523,19 +493,9 @@ def to_lieferant(lieferant_name):
                 "schutzring": "",
                 "text": "",
                 "bemerkung": "",
-                "datum": ""
             })
             save_json_data(lieferant_data, f"{lieferant_name}.json")
 
-            current_date = datetime.datetime.now().strftime('%d.%m.%Y')
-
-             # Update the 'wo' key in the inventory.json for the item
-            for item in farbmeister_app.inventar_data:
-                if item.ELCO_Nummer == elco_nummer:
-                    item.wo = lieferant_name
-                    item.erneuert = current_date
-                    break
-            
             farbmeister_app.save_inventar()
 
             

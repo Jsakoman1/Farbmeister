@@ -18,97 +18,104 @@
         overflow: hidden; 
         padding: 5px; 
     }
+
+
     </style>>
 </head>
 <body>
     {% include 'navbar.html' %}
 
     <div class="content">
-        <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
-        <h1 class="pagetitle">{{ lieferant_name }}</h1>
-        <div class="auftrag-buttons-group">
-            <a class="print-button" onclick="redirectToAuftragPage()">Auftrag</a>
-            <a class="print-button" onclick="redirectToBegleitscheinPage()">Begleitschein</a>        
+        <div class="toolbar-lieferant">
+        
+            <a class="back-button" onclick="redirectToIndexPage()">Zurück</a>
+            <a class="print-button" style="background-color: #e74c3c;" onclick="redirectToAuftragPage()">Auftrag</a>
+            <a class="print-button" style="background-color: #556B2F;" onclick="redirectToBegleitscheinPage()">Begleitschein</a>   
+            
         </div>
-        <button id="saveChangesButton">Änderungen speichern</button>
+            <h1 class="pagetitle">{{ lieferant_name }}</h1>
 
-        <h2>Pallete Mengen</h1>
-        <table>
+            <div class="liefearant-section">
+            <button id="saveChangesButton">Änderungen speichern</button>
 
-            <tr>
-                <td>Verpackung</td>
-                <td>Lange (cm)</td>
-                <td>Breite (cm)</td>
-                <td>Höhe (cm)</td>          
-                <td>m3</td>
-                <td>Gewicht (kg)</td>
-            </tr>
-            <tr>
-                <td><input type="text" id="verpackung" value="{{ lieferant['verpackung'] }}"></td>
-                <td><input type="text" id="masse_x"  value="{{ lieferant['masse_x'] }}"></td>
-                <td><input type="text" id="masse_y"  value="{{ lieferant['masse_y'] }}"></td>
-                <td><input type="text" id="masse_z"  value="{{ lieferant['masse_z'] }}"></td>
-                <td>{{ lieferant["masse_xyz"] }}</td>
-                <td><input type="text" id="gewicht" value="{{ lieferant['gewicht'] }}"></td>
-            </tr>
-        </table>
+            <h2>Pallete Mengen</h1>
+            <table>
 
-        <h2>Defekte Rasterwalzen:</h1>
-        <table border="1" id="lieferantTable">
-            <thead>
                 <tr>
-                    <th>Löschen</th>
-                    <th>ELCO_Nummer</th>
-                    <th>Maschine</th>
-                    <th>Mass</th>
-                    <th>Produktion_Nummer</th>
-                    <th>L_cm</th>
-                    <th>My</th>
-                    <th>Cm3</th>
-                    <th>Seitl_Rand</th>
-                    <th>Qual</th>
-                    <th>Schutzring</th>
-                    <th>Text</th>
-                    <th>Bemerkung</th>
-                    <th>Datum</th>
+                    <td>Verpackung</td>
+                    <td>Lange (cm)</td>
+                    <td>Breite (cm)</td>
+                    <td>Höhe (cm)</td>          
+                    <td>m3</td>
+                    <td>Gewicht (kg)</td>
                 </tr>
-            </thead>
-            <tbody>
-                <!-- Populate table content from TLS.json -->
-                {% if lieferant_data %}
-                    {% for item in lieferant_data %}
-                        <tr>
-                            <td>
-                                <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item_lieferant', lieferant_name=lieferant_name, elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
+                <tr>
+                    <td><input type="text" id="verpackung" value="{{ lieferant['verpackung'] }}"></td>
+                    <td><input type="text" id="masse_x"  value="{{ lieferant['masse_x'] }}"></td>
+                    <td><input type="text" id="masse_y"  value="{{ lieferant['masse_y'] }}"></td>
+                    <td><input type="text" id="masse_z"  value="{{ lieferant['masse_z'] }}"></td>
+                    <td id="masse_xyz">{{ lieferant["masse_xyz"] }}</td>
+                    <td><input type="text" id="gewicht" value="{{ lieferant['gewicht'] }}"></td>
+                </tr>
+            </table>
 
-                                    <button class="delete" type="submit" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
-                                </form>
-                                
-                            </td>
-                            <td>{{ item.ELCO_Nummer }}</td>
-                            <td>{{ item.Maschine }}</td>
-                            <td>{{ item.Mass }}</td>
-                            <td>{{ item.Produktion_Nummer }}</td>
-                            <td>{{ item.L_cm }}</td>
-                            <td>{{ item.my }}</td>
-                            <td>{{ item.cm3 }}</td>
-                            <td><textarea id="seitl_rand_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'seitl_rand', this.value)">{{ item.seitl_rand }}</textarea></td>
-                            <td><textarea id="qual_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'qual', this.value)">{{ item.qual }}</textarea></td>
-                            <td><textarea id="schutzring_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'schutzring', this.value)">{{ item.schutzring }}</textarea></td>
-                            <td><textarea id="text_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'text', this.value)">{{ item.text }}</textarea></td>
-                            <td><textarea id="bemerkung_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'bemerkung', this.value)">{{ item.bemerkung }}</textarea></td>
-                            <td><textarea id="datum_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'datum', this.value)">{{ item.datum }}</textarea></td>
+            <h2>Defekte Rasterwalzen:</h1>
+            <table border="1" id="lieferantTable">
+                <thead>
+                    <tr>
+                        <th>Löschen</th>
+                        <th>ELCO_Nummer</th>
+                        <th>Maschine</th>
+                        <th>Mass</th>
+                        <th>Produktion_Nummer</th>
+                        <th>L_cm</th>
+                        <th>My</th>
+                        <th>Cm3</th>
+                        <th>Seitl_Rand</th>
+                        <th>Qual</th>
+                        <th>Schutzring</th>
+                        <th>Text</th>
+                        <th>Bemerkung</th>
+                        <th>Datum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populate table content from TLS.json -->
+                    {% if lieferant_data %}
+                        {% for item in lieferant_data %}
+                            <tr>
+                                <td>
+                                    <form id="deleteForm_{{ item.ELCO_Nummer }}" action="{{ url_for('delete_item_lieferant', lieferant_name=lieferant_name, elco_nummer_delete=item.ELCO_Nummer) }}" method="post">
+
+                                        <button class="delete" type="submit" onclick="confirmDelete('{{ item.ELCO_Nummer }}')">Löschen</button>
+                                    </form>
+                                    
+                                </td>
+                                <td>{{ item.ELCO_Nummer }}</td>
+                                <td>{{ item.Maschine }}</td>
+                                <td>{{ item.Mass }}</td>
+                                <td>{{ item.Produktion_Nummer }}</td>
+                                <td>{{ item.L_cm }}</td>
+                                <td>{{ item.my }}</td>
+                                <td>{{ item.cm3 }}</td>
+                                <td><textarea id="seitl_rand_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'seitl_rand', this.value)">{{ item.seitl_rand }}</textarea></td>
+                                <td><textarea id="qual_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'qual', this.value)">{{ item.qual }}</textarea></td>
+                                <td><textarea id="schutzring_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'schutzring', this.value)">{{ item.schutzring }}</textarea></td>
+                                <td><textarea id="text_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'text', this.value)">{{ item.text }}</textarea></td>
+                                <td><textarea id="bemerkung_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'bemerkung', this.value)">{{ item.bemerkung }}</textarea></td>
+                                <td><textarea id="datum_{{ item.ELCO_Nummer }}" onchange="handleCellChange('{{ item.ELCO_Nummer }}', 'datum', this.value)">{{ item.datum }}</textarea></td>
 
 
-                        </tr>
-                    {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="14">No data available for this Lieferant.</td>
-                        </tr>
-                    {% endif %}
-            </tbody>
-        </table>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="14">No data available for this Lieferant.</td>
+                            </tr>
+                        {% endif %}
+                </tbody>
+            </table>
+        </div>
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', adjustTextareaFontSize);
@@ -223,6 +230,33 @@
             }
         </script>
         
+        <script>
+            // Function to calculate and update masse_xyz
+function calculateMasseXYZ() {
+    var masse_x = parseFloat(document.getElementById('masse_x').value);
+    var masse_y = parseFloat(document.getElementById('masse_y').value);
+    var masse_z = parseFloat(document.getElementById('masse_z').value);
+
+    var masse_xyz = (masse_x / 100) * (masse_y / 100) * (masse_z / 100);
+    return masse_xyz.toFixed(2); // Round to two decimal places
+}
+
+// Function to update displayed masse_xyz value on the page
+function updateMasseXYZ() {
+    var masse_xyz = calculateMasseXYZ();
+    document.getElementById('masse_xyz').textContent = masse_xyz;
+}
+
+// Add event listener to the "Save Changes" button
+document.getElementById('saveChangesButton').addEventListener('click', function() {
+    // Calculate and update masse_xyz before saving changes
+    updateMasseXYZ();
+
+    // Save changes as usual
+    saveChanges('/save_changes_lieferant/{{ lieferant_name }}');
+});
+
+        </script>
     
     </body>
     </html>

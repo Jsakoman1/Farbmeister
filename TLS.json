@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "ELCO_Nummer": "199A00",
+        "Maschine": "None",
+        "Mass": "None",
+        "Produktion_Nummer": "None",
+        "L_cm": "None",
+        "my": "None",
+        "cm3": "None",
+        "seitl_rand": "",
+        "qual": "",
+        "schutzring": "",
+        "text": "",
+        "bemerkung": ""
+    }
+]

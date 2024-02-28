@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Verdana, Tahoma, 'Segoe UI', Geneva, sans-serif;
-    background-color: #2c3e50;
+    background-color: snow;
     color: #333;
 }
 
@@ -29,20 +29,20 @@ body {
     display: flex;
     align-items: center;
     height: auto;
-    padding: 10px 20px;
+    padding: 10px 10px;
 
 }
 
 
-.navbar-logo {
-    width:100px;
-    max-width: 140px;
+.navbar-logo { 
+    width:6vh;
+    max-width: 100px;
 
 }
 
 .navbar-title {
     margin-left: 50px;
-    font-size: 24px;
+    font-size: 14px;
     color: #ffffff;
 }
 
@@ -60,18 +60,44 @@ body {
 }
 
 
+.navbar2 {
+    padding-top: 140px;
+    background-color: snow;
+    display:block;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 999;
+    
+
+}
+
+.toolbar-lieferant {
+    padding-top: 140px;
+    background-color: snow;
+    display:block;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 999;
+    
+
+}
+
+
+
 .action-button {
-    width: 130px;
+    width: 100px;
     background-color: #3498db;
     border: none;
     color: #ffffff;
-    padding: 10px 15px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
-    margin: 5px 5px;
+    font-size: 13px;
+    margin: 0px 5px;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 6px;
     transition: background-color 0.3s ease;
     font-weight: bold;
 }
@@ -81,27 +107,6 @@ body {
     background-color: #2980b9;
     border-bottom: 6px solid #f39c12;
     transform: scale(1.05);
-}
-
-.back-button {
-    background-color: #2c3e50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-bottom: 50px;
-}
-
-.back-button:hover {
-    background-color: #2c3e50; 
-    transform: scale(1.05); 
 }
 
 
@@ -161,6 +166,51 @@ table td:first-child {
     font-weight: bolder;
     color: red;
 }
+
+
+.print-button {
+    width:150px;
+    background-color: #2c3e50;
+    border: none;
+    color: white;
+    padding: 10px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.print-button:hover {
+    background-color: #2c3e50;
+    transform: scale(1.05);
+}
+
+
+.back-button {
+    width:150px;
+    background-color: #2c3e50;
+    border: none;
+    color: white;
+    padding: 10px 0px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: inline-block;
+    font-size: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.back-button:hover {
+    background-color: #2c3e50;
+    transform: scale(1.05);
+}
+
 
 .print_button {
     background-color: darkblue; /* Green background */

@@ -21,39 +21,55 @@
     {% include 'navbar.html' %}
 
     <div class="content">
+        <div class="navbar2">
 
-        <div class="filter-wrapper">
+            <div class="buttons-group">
+                <form action="{{ url_for('pass_page') }}" method="post">
+                    <input type="hidden" id="passElcoNum" name="elco_nummer_pass" value="">
+                    <button class="pass" type="submit" onclick="selectAction('pass')" value="{{ selectedElcoNum }}" style="background-color: lightgray;">Pass</button>
+                </form>
+                
+                <form action="{{ url_for('magnet_page') }}" method="post">
+                    <input type="hidden" id="magnetElcoNum" name="elco_nummer_magnet" value="">
+                    <button class="magnet" type="submit" onclick="selectAction('magnet')" value="{{ selectedElcoNum }}" style="background-color: lightgray;">Magnet</button>
+                </form>
 
-            <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
+                <form action="{{ url_for('to_defekt') }}" method="post">
+                    <input type="hidden" id="defektElcoNum" name="elco_nummer" value="">
+                    <button class="to-defekt" type="submit" onclick="selectAction('toDefekt')" value="{{ selectedElcoNum }}" style="background-color: lightgray;">To Lieferant</button>
+                </form>
+                
+            
+            </div>
+
+            <div class="filter-wrapper">
+
+                <label for="filterDropdown" class="dropdown-label">Filter nach Maschine:</label>
 
 
-            <select id="filterDropdown" onchange="filterTable()">
-                <option value="all">Alle</option>
-                {% set maschinen = [] %}
-                {% for item in inventar_data %}
-                    {% for maschine in item.Maschine.split('/') %}
-                        {% if maschine.strip() not in maschinen %}
-                            {% set _ = maschinen.append(maschine.strip()) %}
-                            <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            </select>
-         </div>
-
-        <div class="buttons-group-spread">
-            <button id="saveChangesButton">Änderungen speichern</button>
-            <a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze erstellen</a>
+                <select id="filterDropdown" onchange="filterTable()">
+                    <option value="all">Alle</option>
+                    {% set maschinen = [] %}
+                    {% for item in inventar_data %}
+                        {% if item.Maschine %}
+                            {% for maschine in item.Maschine.split('/') %}
+                                {% if maschine.strip() not in maschinen %}
+                                    {% set _ = maschinen.append(maschine.strip()) %}
+                                    <option value="{{ maschine.strip() }}">{{ maschine.strip() }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                </select>
+            </div>
         </div>
+
+
 
         <div class="table-container">
         <table id="inventoryTable">
             <thead>
                 <tr>
-                    <th>Pass</th>
-                    <th>Magnet</th>
-                    <th>To Defekt</th>
-                    
                     {% if inventar_data %}
                         {% for category in inventar_data[0].__dict__.keys() %}
                             {% if category == "wo" %}
@@ -63,9 +79,9 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                    <th colspan="2"><a href="{{ url_for('add_item_page') }}" class="add-new-item-button">Neue Rasterwalze</a></th>
 
-                    <th>Ändern</th>
-                    <th>Löschen</th>
+               
                     
                 </tr>
             </thead>
@@ -74,38 +90,8 @@
                 {% for item in inventar_data %}
 
                     <tr>
-                        <td>
-                            <form action="{{ url_for('pass_page') }}" method="post">
-                                <input type="hidden" name="elco_nummer_pass" value="{{ item.ELCO_Nummer }}">
-                                <button class="pass" type="submit">Pass</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ url_for('magnet_page') }}" method="post">
-                                <input type="hidden" name="elco_nummer_magnet" value="{{ item.ELCO_Nummer }}">
-                                <button class="magnet" type="submit">Magnet</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{{ url_for('to_defekt') }}" method="post">
-                                <input type="hidden" name="elco_nummer" value="{{ item.ELCO_Nummer }}">
-                                <button class="to-defekt" type="submit">To Defekt</button>
-                            </form>
-                        </td>
-                        
-
                         {% for category, value in item.__dict__.items() %}
-                            {% if category == "wo" %}
-                                <td class="max-width-cell">
-                                    <textarea style="background-color: transparent; border: none;font-size: 14px; font-weight: bolder;text-align: center;" rows="2" cols="10" id="wo_{{ item.ELCO_Nummer }}" onchange="handleCellChange_wo('{{ item.ELCO_Nummer }}', this.value)">{{ value if value != None else "" }}</textarea>
-                                </td>
-                                {% elif category == "erneuert" %}
-                                    <td class="max-width-cell">
-                                        <textarea style="background-color: transparent; border: none;font-size: 14px; font-weight: bolder;text-align: center;" rows="2" cols="10" id="erneuert_{{ item.ELCO_Nummer }}" onchange="handleCellChange_erneuert('{{ item.ELCO_Nummer }}', this.value)">{{ value if value != None else "" }}</textarea>
-                                    </td>
-                                {% else %}
-                                    <td class="max-width-cell">{{ value if value != None else "" }}</td>
-                            {% endif %}
+                            <td class="max-width-cell">{{ value if value != None else "" }}</td>
                         {% endfor %}
 
                         <td>
@@ -141,7 +127,7 @@
         var rows = document.getElementById("inventoryTable").getElementsByTagName("tr");
 
         for (var i = 0; i < rows.length; i++) {
-            var maschineCell = rows[i].getElementsByTagName("td")[4];
+            var maschineCell = rows[i].getElementsByTagName("td")[1];
 
             if (maschineCell) {
                 var maschinen = maschineCell.textContent.trim().split('/');
@@ -156,11 +142,13 @@
 </script>
 
 <script>
-    window.onload = function() {
+    document.addEventListener("DOMContentLoaded", function() {
         styleCellsInColumnWithNeuText();
         styleCellsInColumnWithTablarText();
         styleCellsInColumnWithSpecialHeaders();
-    }
+    });
+</script>
+<script>
 
     function styleCellsInColumnWithNeuText() {
         var table = document.getElementById("inventoryTable");
@@ -185,11 +173,13 @@
                 if (cells.length > columnIndexIntAusgang && cells[columnIndexIntAusgang].textContent.trim() === "neu") {
                     cells[columnIndexIntAusgang].style.color = "red";
                     cells[columnIndexIntAusgang].style.fontWeight = "bold";
-                    cells[columnIndexIntAusgang].style.fontSize = "16px";
+                    cells[columnIndexIntAusgang].style.fontSize = "13px";
                 }
             }
         }
     }
+</script>
+<script>
 
     function styleCellsInColumnWithSpecialHeaders() {
         var table = document.getElementById("inventoryTable");
@@ -213,14 +203,15 @@
                 for (var j = 0; j < rows.length; j++) {
                     var cells = rows[j].getElementsByTagName("td");
                     if (cells.length > columnIndex) {
-                        cells[columnIndex].style.fontWeight = "bolder"; 
+                        cells[columnIndex].style.fontWeight = "bold"; 
                     }
                 }
             }
         }
         
     }
-    
+</script>
+<script>
     function styleCellsInColumnWithTablarText() {
         var table = document.getElementById("inventoryTable");
         var headerCells = table.getElementsByTagName("th");
@@ -243,7 +234,8 @@
                     var cellText = cells[columnIndexWo].textContent.trim().toLowerCase();
 
                     if (cellText.replace(/\s/g, '').includes("tablar") || cellText.replace(/\s/g, '').includes("lager")) {
-                        cells[columnIndexWo].style.backgroundColor = "#98FB98"; 
+                        cells[columnIndexWo].style.color = "green"; 
+                        cells[columnIndexWo].style.fontWeight = "bold"; 
                     }
                 }
             }
@@ -262,14 +254,16 @@
 
                     for (var j = 0; j < machineNames.length; j++) {
                         if (cellText.includes(machineNames[j].toLowerCase().replace(/\s/g, ''))) {
-                            cells[columnIndexWo].style.backgroundColor = "skyblue"; 
+                            cells[columnIndexWo].style.color = "blue"; 
+                        cells[columnIndexWo].style.fontWeight = "bold"; 
                             break;
                         }
 
                     }
                     for (var j = 0; j < lieferantenNames.length; j++) {
                         if (cellText.includes(lieferantenNames[j].toLowerCase().replace(/\s/g, ''))) {
-                                cells[columnIndexWo].style.backgroundColor = "#E9967A";
+                            cells[columnIndexWo].style.color = "brown"; 
+                            cells[columnIndexWo].style.fontWeight = "bold"; 
                                 break;
                         }
                     }
@@ -283,54 +277,129 @@
 
 
 <script>
-    // Define a variable to store pending changes
-    let pendingChanges = [];
+    var selectedRow = null;
 
-    // Function to handle cell changes and store pending changes
-    function handleCellChange_wo(elcoNum, value) {
-        pendingChanges.push({ elcoNum: elcoNum, field: 'wo', value: value });
-        document.getElementById('saveChangesButton').style.backgroundColor = 'goldenrod';
+    function enableEditDeleteButtons(row) {
+        var editButton = row.querySelector('.edit');
+        var deleteButton = row.querySelector('.delete');
+        if (editButton && deleteButton) {
+            editButton.disabled = false;
+            deleteButton.disabled = false;
+            editButton.style.backgroundColor = ''; // Restore default button color
+            deleteButton.style.backgroundColor = ''; // Restore default button color
+        }
     }
 
-    // Function to handle cell changes for "erneuert" field and store pending changes
-    function handleCellChange_erneuert(elcoNum, value) {
-        pendingChanges.push({ elcoNum: elcoNum, field: 'erneuert', value: value });
-        document.getElementById('saveChangesButton').style.backgroundColor = 'goldenrod';
+    function disableEditDeleteButtons(row) {
+        var editButton = row.querySelector('.edit');
+        var deleteButton = row.querySelector('.delete');
+        if (editButton && deleteButton) {
+            editButton.disabled = true;
+            deleteButton.disabled = true;
+            editButton.style.backgroundColor = 'lightgray'; // Set background color to gray
+            deleteButton.style.backgroundColor = 'lightgray'; // Set background color to gray
+        }
     }
 
-    // Function to save pending changes
-    function saveChanges_wo() {
-        // Send an AJAX POST request to save the pending changes
-        fetch('/save_changes_wo', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(pendingChanges),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response if needed
-            console.log(data);
-            // Clear pendingChanges array after saving
-            pendingChanges = [];
-            location.reload();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+    // Function to handle row selection
+    function selectRow(row) {
+        // Deselect the previously selected row, if any
+        if (selectedRow !== null) {
+            selectedRow.style.backgroundColor = '';
+            disableEditDeleteButtons(selectedRow);
+        }
+
+        // Select the clicked row
+        selectedRow = row;
+        row.style.backgroundColor = 'lightblue';
+        enablePassMagnetToDefektButtons()
+        enableEditDeleteButtons(row);
+
+
+    }
+
+    // Add event listeners to each row to handle row selection
+    window.onload = function() {
+        var rows = document.getElementById('inventoryTable').getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            disableEditDeleteButtons(rows[i]); // Disable edit/delete buttons by default
+            rows[i].addEventListener('click', function() {
+                selectRow(this); 
+            });
+        }
+        disablePassMagnetToDefektButtons();
+
+        document.addEventListener('click', function(event) {
+            // Check if the clicked element is outside the table and not a button
+            if (!event.target.closest('#inventoryTable') && event.target.tagName !== 'BUTTON') {
+                // Deselect the row
+                if (selectedRow !== null) {
+                    selectedRow.style.backgroundColor = '';
+                    selectedRow = null;
+                    disablePassMagnetToDefektButtons();
+                    // Disable edit/delete buttons when clicked outside the table
+                    var allRows = document.getElementById('inventoryTable').getElementsByTagName('tr');
+                    for (var i = 0; i < allRows.length; i++) {
+                        disableEditDeleteButtons(allRows[i]);
+                    }
+                }
+            }
         });
+    };
+
+    function enablePassMagnetToDefektButtons() {
+        var passButton = document.querySelector('.pass');
+        var magnetButton = document.querySelector('.magnet');
+        var toDefektButton = document.querySelector('.to-defekt');
+
+        passButton.disabled = false;
+        magnetButton.disabled = false;
+        toDefektButton.disabled = false;
+
+        passButton.style.backgroundColor = ''; // Restore default button color
+        magnetButton.style.backgroundColor = ''; // Restore default button color
+        toDefektButton.style.backgroundColor = ''; // Restore default button color
     }
 
-    // Add event listener to the "Save Changes" button
-    document.getElementById('saveChangesButton').addEventListener('click', function() {
-        saveChanges_wo();
+    function disablePassMagnetToDefektButtons() {
+        var passButton = document.querySelector('.pass');
+        var magnetButton = document.querySelector('.magnet');
+        var toDefektButton = document.querySelector('.to-defekt');
 
-    });
+        passButton.disabled = true;
+        magnetButton.disabled = true;
+        toDefektButton.disabled = true;
+
+        passButton.style.backgroundColor = 'lightgray'; // Set background color to gray
+        magnetButton.style.backgroundColor = 'lightgray'; // Set background color to gray
+        toDefektButton.style.backgroundColor = 'lightgray'; // Set background color to gray
+    }
+
+    
+
+    function selectAction(action) {
+        // Check if a row is selected
+        if (selectedRow !== null) {
+            var selectedElcoNum = selectedRow.querySelector('td.max-width-cell').textContent.trim();
+
+            if (action === 'pass') {
+                document.getElementById('passElcoNum').value = selectedElcoNum;
+                document.forms[0].submit(); // Submit the form for Pass
+            } else if (action === 'magnet') {
+                document.getElementById('magnetElcoNum').value = selectedElcoNum;
+                document.forms[1].submit(); // Submit the form for Magnet
+            } else if (action === 'toDefekt') {
+                document.getElementById('defektElcoNum').value = selectedElcoNum;
+                document.forms[2].submit(); // Submit the form for To-Defekt
+            }
+        } 
+        else {
+                alert('Please select a row.');
+        }
+    }
+
+    
 </script>
-
-
-
-
 
 
 </body>

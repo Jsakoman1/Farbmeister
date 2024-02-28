@@ -87,6 +87,20 @@
                 button.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)'; // Box shadow
                 button.style.transition = 'all 0.3s ease'; // Transition
             });
+
+            const elco_nummer = "{{ elco_nummer }}";
+            
+            const existsInOtherLieferant = lieferanten_data.some(lieferant => {
+                // Check if elco_nummer exists in other lieferanten_data
+                const lieferantItems = load_json_data(`${lieferant.name}.json`);
+                return lieferantItems.some(item => item.ELCO_Nummer === elco_nummer);
+            });
+
+            if (existsInOtherLieferant) {
+                // Handle the scenario where elco_nummer exists in other lieferanten
+                alert("This item already exists in another lieferant.");
+                // You can prevent the user from proceeding further or display a warning message
+            }
         });
 
     </script>
@@ -95,5 +109,7 @@
                 window.location.href = "{{ url_for('index') }}";
             }
     </script>
+
+    
 </body>
 </html>
